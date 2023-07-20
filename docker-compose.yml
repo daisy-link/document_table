@@ -1,0 +1,38 @@
+version: "3.4"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      - ./src:/var/www/html
+    ports:
+      - ${APP_PORT:-80}:80
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=${DATABASE:-db_document_table}
+      - MYSQL_USER=${USERNAME:-user}
+      - MYSQL_PASSWORD=${USERPASS:-password}
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    volumes:
+      - ./docker/phpmyadmin/sessions:/sessions
+      - ./docker/phpmyadmin/phpmyadmin-misc.ini:/usr/local/etc/php/conf.d/phpmyadmin-misc.ini
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=${USERNAME:-user}
+      - PMA_PASSWORD=${USERPASS:-password}
+    ports:
+      - 4040:80
+    depends_on:
+      - mysql

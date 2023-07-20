@@ -1,0 +1,9 @@
+.env
+docker/mysql/data/*
+docker/phpmyadmin/sessions/*
+coding/*
+coding/node_modules/*
+coding/dist/*
+src/app/vendor/*
+src/database/*
+!src/database/.gitkeep

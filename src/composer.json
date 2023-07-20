@@ -1,0 +1,10 @@
+{
+    "config": {
+        "vendor-dir": "app/vendor"
+    },
+    "require": {
+        "mikecao/flight": "^2.0",
+        "phpoffice/phpspreadsheet": "^1.29",
+        "league/flysystem": "^3.0"
+    }
+}
