@@ -208,7 +208,6 @@ class Pages
                         }
                         fclose($filer);
                         $objFile->bindCsv(TABLE_LOGICAL_CSV_FILE, $datas);
-                        exit;
                     }
                     if ($_FILES['commonFile']['tmp_name']) {
                         $filer = fopen($_FILES['commonFile']['tmp_name'], 'r');
