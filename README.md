@@ -15,3 +15,8 @@ composer dumpautoload
 ```
 - WEB APP ： http://localhost/
 - phpmyadmin ： http://localhost:4040/
+
+
+### 簡単な利用方法
+
+https://github.com/daisy-link/document_table/blob/master/manual/simple.pdf
