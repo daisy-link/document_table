@@ -23,7 +23,7 @@ services:
       - MYSQL_USER=${USERNAME:-user}
       - MYSQL_PASSWORD=${USERPASS:-password}
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin:latest
     volumes:
       - ./docker/phpmyadmin/sessions:/sessions
       - ./docker/phpmyadmin/phpmyadmin-misc.ini:/usr/local/etc/php/conf.d/phpmyadmin-misc.ini
