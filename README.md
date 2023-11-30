@@ -15,10 +15,3 @@ composer dumpautoload
 ```
 - WEB APP ： http://localhost/
 - phpmyadmin ： http://localhost:4040/
-
-### 利用方法
-
-１）　WEB APP　　へアクセス ： http://localhost/
-
-２）　DBの接続情報を設定して作成！
-
