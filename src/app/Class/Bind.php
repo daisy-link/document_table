@@ -21,6 +21,15 @@ class Bind
             'tables' => [],
         ];
 
+        /** Jsonの設定情報 */
+        $already = [];
+
+        if (!empty($datas['tables'])) {
+            foreach ($datas['tables'] as $key => $table) {
+                $already[$table['table']] = $table;
+            }
+        }
+
         try {
 
             // MYSQL
@@ -33,16 +42,31 @@ class Bind
 
                 $fields = [];
                 foreach ($objDb->fields($table['name']) as $field) {
+
+                    /** Jsonの設定がある場合は情報を引き継ぐ */
+                    $name = '';
+                    $comment = '';
+                    $bgcolor = '';
+                    if (isset($already[$table['name']]['columns'])) {
+                        foreach ($already[$table['name']]['columns'] as $item) {
+                            if ($field['field'] == $item['field']) {
+                                $name = $item['name'] ?? '';
+                                $comment = $item['comment'] ?? '';
+                                $bgcolor = $item['bgcolor'] ?? '';
+                            }
+                        }
+                    }
+
                     $fields[] = [
-                        'name'    => '',
+                        'name'    => $name,
                         'field'   => $field['field'],
                         'type'    => $field['type'],
                         'null'    => $field['null'],
                         'key'     => $field['key'],
                         'default' => $field['default'] ,
                         'extra'   => $field['extra'],
-                        'comment' => $field['comment'],
-                        'bgcolor' => '',
+                        'comment' => $comment ? $comment : $field['comment'],
+                        'bgcolor' => $bgcolor,
                     ];
                 }
                 
@@ -56,13 +80,29 @@ class Bind
                         'unique' => $index['unique'],
                     ];
                 }
+
+                /** Jsonの設定がある場合は情報を引き継ぐ */
+                $name = '';
+                $definition = '';
+                $comment = '';
+                $bgcolor = '';
+                $order = '';
+                if (isset($already[$table['name']])) {
+                    $item = $already[$table['name']];
+                    $name = $item['name'] ?? '';
+                    $definition = $item['definition'] ?? '';
+                    $comment = $item['comment'] ?? '';
+                    $bgcolor = $item['bgcolor'] ?? '';
+                    $order = $item['order'] ?? '';
+                }
+
                 $databases['tables'][$table['name']] = [
                     'table' => $table['name'],
-                    'name' => '',
-                    'definition' => '',
-                    'comment' => $table['comment'],
-                    'bgcolor' => '',
-                    'order' => '',
+                    'name' => $name,
+                    'definition' => $definition,
+                    'comment' => $comment ?? $table['comment'],
+                    'bgcolor' => $bgcolor,
+                    'order' => $order,
                     'columns' => $fields,
                     'indexs' => $indexs,
                 ];

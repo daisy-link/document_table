@@ -69,6 +69,8 @@ class Pages
                 $this->assign['datas']['title'] = $this->assign['database']['title'] ?? '';
                 $this->assign['datas']['comment'] = $this->assign['database']['comment'] ?? '';
                 $this->assign['datas']['version'] = $this->assign['database']['version'] ?? '';
+                $this->assign['datas']['tables'] = $this->assign['database']['tables'] ?? [];
+
                 try {
                     $objBind = new Bind();
                     $tables = $objBind->initial($this->assign['datas']);
