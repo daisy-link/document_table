@@ -4,6 +4,9 @@ require_once realpath(dirname(__FILE__)) . '/vendor/autoload.php';
 /* settings */
 define('ROOT_PATH', '/');
 define('ROOT_EXPORT_FILE_PATH', '/database/');
+$rootPath = rtrim(ROOT_PATH, '/');
+$exportFilePath = ltrim(ROOT_EXPORT_FILE_PATH, '/');
+define('ROOT_EXPORT_FILE_URL', $rootPath . '/' . $exportFilePath);
 define('EXPORT_FILE_PATH', realpath(dirname(__FILE__)) . '/..' . ROOT_EXPORT_FILE_PATH);
 
 /* 定義ファイル名 */

@@ -40,16 +40,16 @@ class Pages
                         $this->assign['locked'] =  true;
                     }
                 }
-                $this->assign['files']['database'] = ROOT_EXPORT_FILE_PATH . DATABASE_DEFINITION_JSON_FILE;
+                $this->assign['files']['database'] = ROOT_EXPORT_FILE_URL . DATABASE_DEFINITION_JSON_FILE;
             }
             if ($objFile->has(TABLE_LOGICAL_CSV_FILE)) {
-                $this->assign['files']['tables'] = ROOT_EXPORT_FILE_PATH . TABLE_LOGICAL_CSV_FILE;
+                $this->assign['files']['tables'] = ROOT_EXPORT_FILE_URL . TABLE_LOGICAL_CSV_FILE;
             }
             if ($objFile->has(COMMON_FIELD_LOGICAL_CSV_FILE)) {
-                $this->assign['files']['common'] = ROOT_EXPORT_FILE_PATH . COMMON_FIELD_LOGICAL_CSV_FILE;
+                $this->assign['files']['common'] = ROOT_EXPORT_FILE_URL . COMMON_FIELD_LOGICAL_CSV_FILE;
             }
             if ($objFile->has(DETAIL_FIELD_LOGICAL_CSV_FILE)) {
-                $this->assign['files']['fields'] = ROOT_EXPORT_FILE_PATH . DETAIL_FIELD_LOGICAL_CSV_FILE;
+                $this->assign['files']['fields'] = ROOT_EXPORT_FILE_URL . DETAIL_FIELD_LOGICAL_CSV_FILE;
             }
         } catch (Exception $e) {
             $this->errors[] = 'Connection failed: ' . $e->getMessage();
