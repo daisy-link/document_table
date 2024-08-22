@@ -41,4 +41,16 @@ class Utils
         }
         echo $string;
     }
+
+    public static function _selected($value, $selected)
+    {
+        $string = 'selected';
+
+        if ($value == $selected) {
+            echo $string;
+        }
+    }
+
+
+
 }
