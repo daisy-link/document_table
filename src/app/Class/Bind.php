@@ -31,9 +31,14 @@ class Bind
         }
 
         try {
+            if ($datas['type'] == 'mysql') {
+                $objDb = new MYSQL();
+            }
+            else if ($datas['type'] == 'mssql') {
+                $objDb = new MSSQL();
+            }
 
-            // MYSQL
-            $objDb = new MYSQL();
+
             $objDb->connect($datas);
             $tables = [];
             $tables = $objDb->tables();

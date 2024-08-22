@@ -28,6 +28,7 @@ require_once realpath(dirname(__FILE__)) . '/Class/File.php';
 require_once realpath(dirname(__FILE__)) . '/Class/Excel.php';
 require_once realpath(dirname(__FILE__)) . '/Class/Controllers/Pages.php';
 require_once realpath(dirname(__FILE__)) . '/Class/Databases/MYSQL.php';
+require_once realpath(dirname(__FILE__)) . '/Class/Databases/MSSQL.php';
 
 /* function */
 session_start();

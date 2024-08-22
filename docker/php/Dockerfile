@@ -1,34 +1,25 @@
-FROM php:8.0.16-apache-buster
+FROM php:8.1-apache
 
+# 必要なパッケージをインストール
 RUN apt-get update && \
-    apt-get install -y libzip-dev zlib1g-dev && \
-    docker-php-ext-install mysqli pdo_mysql zip && \
-    a2enmod rewrite \
+    apt-get install -y libzip-dev zlib1g-dev \
+    && docker-php-ext-install mysqli pdo_mysql zip \
+    && a2enmod rewrite \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && apt-get install -y zlib1g-dev libpng-dev libjpeg62-turbo-dev wget gnupg \
     && docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
-RUN apt-get update \
-    && apt-get install -qy \
-    ruby \
-    ruby-dev \
-    rubygems \
-    build-essential \
-    libsqlite3-dev \
-    && apt-get autoremove \
-    && apt-get clean
 
-# Composer
+# Composerのインストール
 RUN curl -sS https://getcomposer.org/installer \
-    |  php -- \
+    | php -- \
         --filename=composer \
         --install-dir=/usr/local/bin \
     && chown www-data /var/www \
     && chmod g+s /var/www/html
 
-
-# Install SQL Server extensions
+# SQL Server拡張のインストール
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list
 

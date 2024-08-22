@@ -1,4 +1,8 @@
 .env
+sqlserver.env
+docker/mssql/data/*
+docker/mssql/log/*
+docker/mssql/secrets/*
 docker/mysql/data/*
 docker/phpmyadmin/sessions/*
 coding/*

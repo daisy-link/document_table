@@ -26,6 +26,7 @@
             <?php endif; ?>
         </div>
 
+
         <dl class="c-formItem">
             <dt class="c-formItem__head">
                 <div class="c-formItem__ttl"> host </div>
@@ -33,7 +34,8 @@
             <dd>
                 <div class="c-selectbox">
                     <select name="type" class="<?php if (!empty($assign['errors'])): ?>is-error<?php endif; ?>">
-                        <option value="mysql">MySQL</option>
+                        <option value="mysql" <?php Utils::_selected('mysql', $assign['datas']['type'] ?? ''); ?>>MySQL</option>
+                        <option value="mssql" <?php Utils::_selected('mssql', $assign['datas']['type'] ?? ''); ?>>MSSQL</option>
                     </select>
                 </div>
             </dd>
