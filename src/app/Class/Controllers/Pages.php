@@ -196,17 +196,23 @@ class Pages
                         $datas = [];
                         $unique = [];
                         while ($line = fgetcsv($filer)) {
+
                             if (count($line) !== count(TABLE_LOGICAL_CSV_COLUMNS)) {
                                 throw new Exception('Tables definition file のフォーマットが違います。');
                             }
 
                             if (isset($unique[$line[1]])) {
-                                throw new Exception('Tables definition file の論理名の設定が重複しています。');
+                                $unique[$line[1]]++;
+                                $line[1] = $line[1] . '#' . $unique[$line[1]];
+                                //throw new Exception('Tables definition file の論理名の設定が重複しています。');
                             } else {
-                                $unique[$line[1]] = $line[0];
+                                if (!empty($line[1])) {
+                                    $unique[$line[1]] = 1;
+                                }
                             }
 
                             $datas[] = $line;
+                            
                         }
                         fclose($filer);
                         $objFile->bindCsv(TABLE_LOGICAL_CSV_FILE, $datas);
