@@ -24,7 +24,7 @@
               <h3>Tables definition file</h3>
               <p>テーブル名に対して論理名・コメント・色の設定ができます。</p>
               <p class="u-text-caution">※ 並びを変えることで並びの変更も可能です。</p>
-              <a href="<?php echo $assign['files']['tables'];?>" class="c-btn --sm">csv DL.</a>
+              <a href="<?php echo $assign['files']['tables'];?>?<?php echo date("YmdHis"); ?>" class="c-btn --sm">csv DL.</a>
             </div>
             <?php endif; ?>
             <?php if ($assign['files']['common']): ?>
@@ -32,7 +32,7 @@
               <h3>Common definition file</h3>
               <p>共通のフィールド名に対して論理名の設定ができます。</p>
               <p class="u-text-caution">※ 論理名が、全フィールドに反映されます。</p>
-              <a href="<?php echo $assign['files']['common'];?>" class="c-btn --sm">csv DL.</a>
+              <a href="<?php echo $assign['files']['common'];?>?<?php echo date("YmdHis"); ?>" class="c-btn --sm">csv DL.</a>
             </div>
             <?php endif; ?>
             <?php if ($assign['files']['fields']): ?>
@@ -40,7 +40,7 @@
               <h3>Fields definition file</h3>
               <p>各テーブルのフィールドごとに論理名・コメント・色の設定を行う</p>
               <p class="u-text-caution">※ 最終的な調整でご利用ください。<br>（Common definition の設定より優先されます）</p>
-              <a href="<?php echo $assign['files']['fields'];?>" class="c-btn --sm">csv DL.</a>
+              <a href="<?php echo $assign['files']['fields'];?>?<?php echo date("YmdHis"); ?>" class="c-btn --sm">csv DL.</a>
             </div>
             <?php endif; ?>
 
