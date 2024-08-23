@@ -228,7 +228,40 @@ class Pages
                         }
                         fclose($filer);
                         $objFile->bindCsv(COMMON_FIELD_LOGICAL_CSV_FILE, $datas);
+
+                        /*** Fields definition fileへも反映 */
+                        $commonFields = [];
+                        $commonFile = $objFile->read(COMMON_FIELD_LOGICAL_CSV_FILE);
+                        $commonLines = explode("\n", $commonFile);
+                        foreach ($commonLines as $line) {
+                            $arrLine = str_getcsv($line);
+                            if (isset($arrLine[0])) {
+                                $commonFields[$arrLine[0]] = $arrLine;
+                            }
+                        }
+                        if ($objFile->has(DETAIL_FIELD_LOGICAL_CSV_FILE)) {
+                            $arrCsv = [];
+                            $detailFile = $objFile->read(DETAIL_FIELD_LOGICAL_CSV_FILE);
+                            $detailLines = explode("\n", $detailFile);
+                            foreach ($detailLines as $line) {
+                                $arrLine = str_getcsv($line);
+                                if (isset($arrLine[1])) {
+                                    if (isset($commonFields[$arrLine[1]])) {
+                                        $updateLine = $commonFields[$arrLine[1]];
+                                        $arrLine[2] = empty($arrLine[2]) ? $updateLine[1] : $arrLine[2];
+                                        $arrLine[3] = empty($arrLine[3]) ? $updateLine[2] : $arrLine[3];
+                                    }
+                                    $arrCsv[] = $arrLine;
+                                }
+                            }
+                            try {
+                                $objFile->bindCsv(DETAIL_FIELD_LOGICAL_CSV_FILE, $arrCsv);
+                            } catch (Exception $e) {
+                                $this->assign['errors'][] = 'failed: ' . $e->getMessage() . '[' . $e->getLine() . ']';
+                            }
+                        }
                     }
+
                     if ($_FILES['fieldsFile']['tmp_name']) {
                         $filer = fopen($_FILES['fieldsFile']['tmp_name'], 'r');
                         $datas = [];

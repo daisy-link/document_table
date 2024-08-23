@@ -27,23 +27,23 @@
               <a href="<?php echo $assign['files']['tables'];?>" class="c-btn --sm">csv DL.</a>
             </div>
             <?php endif; ?>
-            
-            <?php if ($assign['files']['fields']): ?>
-            <div class="p-setting__fileBox">
-              <h3>Fields definition file</h3>
-              <p>各テーブルのフィールドごとに論理名・コメント・色の設定</p>
-              <p class="u-text-caution">　</p>
-              <a href="<?php echo $assign['files']['fields'];?>" class="c-btn --sm">csv DL.</a>
-            </div>
-            <?php endif; ?>
             <?php if ($assign['files']['common']): ?>
             <div class="p-setting__fileBox">
               <h3>Common definition file</h3>
               <p>共通のフィールド名に対して論理名の設定ができます。</p>
-              <p class="u-text-caution">※ 論理名は、全フィールドに反映されます。（Fields definition の設定が優先）</p>
+              <p class="u-text-caution">※ 論理名が、全フィールドに反映されます。</p>
               <a href="<?php echo $assign['files']['common'];?>" class="c-btn --sm">csv DL.</a>
             </div>
             <?php endif; ?>
+            <?php if ($assign['files']['fields']): ?>
+            <div class="p-setting__fileBox">
+              <h3>Fields definition file</h3>
+              <p>各テーブルのフィールドごとに論理名・コメント・色の設定を行う</p>
+              <p class="u-text-caution">※ 最終的な調整でご利用ください。<br>（Common definition の設定より優先されます）</p>
+              <a href="<?php echo $assign['files']['fields'];?>" class="c-btn --sm">csv DL.</a>
+            </div>
+            <?php endif; ?>
+
         </div>
         <?php endif; ?>
 
@@ -64,20 +64,6 @@
                 </div>
             </dd>
         </dl>
-        
-        <dl class="c-formItem">
-            <dt class="c-formItem__head">
-                <div class="c-formItem__ttl"> Fields definition file </div>
-                <p class="u-text-suppl"></p>
-            </dt>
-            <dd>
-                <div class="c-fileInpu">
-                    <label> csv file.<input type="file" name="fieldsFile" class="js-filePreview" accept="text/csv">
-                    </label>
-                    <div class="c-fileInpu__preview"></div>
-                </div>
-            </dd>
-        </dl>
 
         <dl class="c-formItem">
             <dt class="c-formItem__head">
@@ -92,6 +78,22 @@
                 </div>
             </dd>
         </dl>
+
+        <dl class="c-formItem">
+            <dt class="c-formItem__head">
+                <div class="c-formItem__ttl"> Fields definition file </div>
+                <p class="u-text-suppl"></p>
+            </dt>
+            <dd>
+                <div class="c-fileInpu">
+                    <label> csv file.<input type="file" name="fieldsFile" class="js-filePreview" accept="text/csv">
+                    </label>
+                    <div class="c-fileInpu__preview"></div>
+                </div>
+            </dd>
+        </dl>
+
+
         <?php if ($assign['errors']) : foreach ($assign['errors'] as $error) : ?>
             <p class="errorText"><?php echo $error; ?></p>
         <?php endforeach; endif; ?>
