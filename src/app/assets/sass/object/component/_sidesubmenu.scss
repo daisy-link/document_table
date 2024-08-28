@@ -33,5 +33,12 @@
                 width: 30px;
             }
         }
+        > ul {
+            margin-left: 25px;
+            a {
+                padding: 5px 0;
+                @include fs(12);
+            }
+        }
     }
 }

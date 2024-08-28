@@ -1,0 +1,97 @@
+@use "../../module/import" as *;
+/*
+*
+* tables
+*
+*/
+.c-table {
+    
+    &__scroll {
+        overflow-x: auto;
+    }
+    &__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 0px;
+        
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+
+        &.--nowrapTd {
+            td {
+                white-space:nowrap;
+            }
+        }
+        .--nowrap {
+            white-space:nowrap;
+        }
+    }
+    thead {
+        background-color: var(--bordercolor-lightgray);
+        border-bottom: 3px double var(--bordercolor-table);
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+    tr {
+        position: relative;
+        border-bottom: solid 1px var(--bordercolor-table);
+        td {
+            border-right: dashed 1px rgba(0, 0, 0, .2);
+            &:last-child {
+                border-right:none;
+            }
+        }
+    }
+    th,td {
+        padding: 5px;
+        vertical-align: middle;
+
+        @include fs(11);
+        &.--left {
+            text-align: left;
+        }
+    }
+    th {
+        @include fs(11);
+        font-style: normal;
+    }
+    tbody {
+        @include mq(max, sm) {
+            border-top: solid 1px var(--bordercolor-table);
+        }
+        tr:nth-child(even) {
+            background-color: var(--color-table-even);
+        }
+        
+    }
+    &.--tablesEdit {
+        thead {
+            tr {
+                th:nth-child(1) {
+                    width: 90px;
+                }
+                th:nth-child(3) {
+                    width: 100px;
+                }
+                th:nth-child(4) {
+                }
+                th:nth-child(5) {
+                    width: 90px;
+                }
+            }
+        }
+        td {
+            input {
+                margin-bottom: 0px !important;
+                padding: 10px 5px !important;
+            }
+        }
+    }
+    .drag-over {
+        background-color: var(--color-clearblue) !important;
+    }
+}

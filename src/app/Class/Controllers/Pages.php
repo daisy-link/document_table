@@ -294,6 +294,71 @@ class Pages
         }
     }
 
+
+    /**
+     * テーブルの設定
+     *
+     * @return void
+     */
+    public function additionTables()
+    {
+
+        $objFile = new File();
+        $this->assign['tables'] = [];
+
+        if ($objFile->has(TABLE_LOGICAL_CSV_FILE)) {
+            $datas = [];
+            $file = $objFile->read(TABLE_LOGICAL_CSV_FILE);
+
+            // UTF-8 BOM (\xEF\xBB\xBF) を削除
+            $bom = "\xEF\xBB\xBF";
+            while (strpos($file, $bom) === 0) {
+                $file = substr($file, 3);
+            }
+
+            $lines = explode("\n", $file);
+            $lines = array_filter($lines, function($line) {
+                return trim($line) !== '';
+            });
+            $lines = array_values($lines);
+            foreach ($lines as $line) {
+                $datas[] = str_getcsv($line);
+            }
+            $this->assign['tables'] = $datas;
+        }
+
+        $request = Flight::request();
+
+        if ($request->method == 'POST') {
+            if (Utils::validCSRF()) {
+                try {
+                    $postData = $request->data->getData();
+                    $tables = $postData['tables'] ?? [];
+
+                    if (!empty($tables)) {
+
+                        array_unshift($tables, $datas[0]);
+
+                        $objBind = new Bind();
+                        $objFile->bindCsv(TABLE_LOGICAL_CSV_FILE, $tables);
+                        $objBind = new Bind();
+                        $objBind->setDefinition($this->assign['database']);
+                        $objFile->bindFile(DATABASE_DEFINITION_JSON_FILE, json_encode($this->assign['database'], JSON_UNESCAPED_UNICODE));
+                    }
+                } catch (Exception $e) {
+                    $this->assign['errors'][] = 'failed: ' . $e->getMessage();
+                }
+                if (empty($this->assign['errors'])) {
+                    Utils::setMessage(['success: データの更新が完了しました。']);
+                    $this->assign['reload'] = true;
+                }
+            } else {
+                $this->assign['errors'][] = 'failed: 不正なデータ送信がありました。';
+            }
+        }
+    }
+
+
     /**
      * 定義書のエクスポート・ダウンロード
      *

@@ -50,6 +50,20 @@ Flight::route('GET|POST /setting/addition', function(){
     Flight::render('layout', ['title' => 'Addition']);
 });
 
+Flight::route('GET|POST /setting/addition/tables', function(){
+    $objPages = new Pages();
+    if (!$objPages->assign['created']) {
+        Flight::redirect('/setting/connect');
+    }
+    $objPages->additionTables();
+    if ($objPages->assign['reload']) {
+        Flight::redirect('/setting/addition/tables');
+    }
+    Flight::render('menu', ['created' => $objPages->assign['created']], 'settingMenu');
+    Flight::render('tables', ['assign' => $objPages->assign], 'mainContent');
+    Flight::render('layout', ['title' => 'Addition - Tables Edit']);
+});
+
 Flight::route('GET|POST /setting/inout', function(){
     $objPages = new Pages();
     $objPages->inout();

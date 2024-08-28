@@ -626,6 +626,10 @@ input[type=file] {
   margin-bottom: 5px;
 }
 
+input[type=color] {
+  background: none !important;
+}
+
 .errorText {
   color: var(--color-error);
 }
@@ -1107,6 +1111,170 @@ input[type=file] {
   text-align: center;
   width: 30px;
 }
+.c-sideSubMenu li > ul {
+  margin-left: 25px;
+}
+.c-sideSubMenu li > ul a {
+  padding: 5px 0;
+  font-size: 12px;
+  font-size: 1.2rem;
+}
+
+/*
+*
+* tables
+*
+*/
+.c-table__scroll {
+  overflow-x: auto;
+}
+.c-table__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0px;
+}
+.c-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.c-table table.--nowrapTd td {
+  white-space: nowrap;
+}
+.c-table table .--nowrap {
+  white-space: nowrap;
+}
+.c-table thead {
+  background-color: var(--bordercolor-lightgray);
+  border-bottom: 3px double var(--bordercolor-table);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.c-table tr {
+  position: relative;
+  border-bottom: solid 1px var(--bordercolor-table);
+}
+.c-table tr td {
+  border-right: dashed 1px rgba(0, 0, 0, 0.2);
+}
+.c-table tr td:last-child {
+  border-right: none;
+}
+.c-table th, .c-table td {
+  padding: 5px;
+  vertical-align: middle;
+  font-size: 11px;
+  font-size: 1.1rem;
+}
+.c-table th.--left, .c-table td.--left {
+  text-align: left;
+}
+.c-table th {
+  font-size: 11px;
+  font-size: 1.1rem;
+  font-style: normal;
+}
+.c-table tbody tr:nth-child(even) {
+  background-color: var(--color-table-even);
+}
+.c-table.--tablesEdit thead tr th:nth-child(1) {
+  width: 90px;
+}
+.c-table.--tablesEdit thead tr th:nth-child(3) {
+  width: 100px;
+}
+.c-table.--tablesEdit thead tr th:nth-child(5) {
+  width: 90px;
+}
+.c-table.--tablesEdit td input {
+  margin-bottom: 0px !important;
+  padding: 10px 5px !important;
+}
+.c-table .drag-over {
+  background-color: var(--color-clearblue) !important;
+}
+
+/*
+*
+* tooltip
+*
+*/
+.c-tooltip {
+  position: relative;
+  display: inline-block;
+  min-width: 16px;
+}
+.c-tooltip em {
+  background-color: black;
+  color: var(--color-white);
+  width: 15px;
+  height: 15px;
+  border-radius: 100vh;
+  display: inline-block;
+  text-align: center;
+  line-height: 15px;
+  font-size: 9px;
+  font-size: 0.9rem;
+  font-style: normal;
+}
+.c-tooltip:after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 5px;
+  width: 0;
+  height: 0;
+  border-bottom: 9px solid rgba(0, 0, 0, 0.9);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  display: none;
+}
+.c-tooltip .text {
+  display: none;
+  position: absolute;
+  font-size: 10px;
+  font-size: 1rem;
+  left: 0;
+  top: 100%;
+  padding: 4px 8px;
+  white-space: nowrap;
+  color: var(--color-white);
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 3px;
+  z-index: 999;
+  box-shadow: var(--shadow-box);
+}
+.c-tooltip .text.--right {
+  left: auto;
+  right: -5px;
+}
+.c-tooltip.--right:after {
+  left: 1px;
+}
+.c-tooltip.--right .text {
+  left: auto;
+  right: -5px;
+}
+.c-tooltip.is-fixed:after {
+  display: none !important;
+}
+.c-tooltip.is-fixed .text {
+  white-space: unset;
+  min-width: 70%;
+  width: 100%;
+  max-width: 90%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.c-tooltip.is-lock .text, .c-tooltip.is-lock:after {
+  display: block;
+}
+.c-tooltip:not(.js-tooltip):hover .text, .c-tooltip:not(.js-tooltip):hover:after {
+  display: block;
+}
 
 /*
 *
@@ -1346,6 +1514,10 @@ input[type=file] {
   color: var(--fontcolor-lightgray);
 }
 
+.u-text-nowrap {
+  white-space: nowrap;
+}
+
 /*
 *
 * utility width
@@ -1418,6 +1590,9 @@ input[type=file] {
   }
   .c-btn {
     padding: 10px 5px;
+  }
+  .c-table tbody {
+    border-top: solid 1px var(--bordercolor-table);
   }
   .u-width-m {
     min-width: 100%;

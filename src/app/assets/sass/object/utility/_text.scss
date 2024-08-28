@@ -29,7 +29,9 @@
     @include fs(11);
     color: var(--fontcolor-lightgray);
 }
-
 .u-text-lightgray {
     color: var(--fontcolor-lightgray);
+}
+.u-text-nowrap {
+    white-space: nowrap
 }

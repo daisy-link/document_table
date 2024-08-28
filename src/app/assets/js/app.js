@@ -12,11 +12,17 @@ window.addEventListener('DOMContentLoaded', function () {
   var actionBtn = document.querySelectorAll('.js-btnAction');
   for (var i = 0; i < actionBtn.length; i++) {
     actionBtn[i].addEventListener('click', function (e) {
+      let btn = this; // 'let' を使用
       this.classList.add('--load');
       this.disabled = true;
       if (this.type == 'submit') {
         this.closest("form").submit();
       }
+      // 一定時間後に --load クラスを削除する
+      setTimeout(function() {
+        btn.classList.remove('--load');
+        btn.disabled = false;
+      }, 3000);
     });
   }
   var deleteBtn = document.querySelectorAll('.js-btnDelete');
@@ -65,4 +71,92 @@ window.addEventListener('DOMContentLoaded', function () {
       fileNameObj.textContent = file.name;
     });
   }
+
+    /**
+   * ツールチップの制御
+   * 
+   * 
+   * 
+   * 
+   * 
+   */
+    var tooltipBtns = document.querySelectorAll('.js-tooltip');
+    for (var _i11 = 0; _i11 < tooltipBtns.length; _i11++) {
+      var tooltipBtn = tooltipBtns[_i11];
+      tooltipBtn.addEventListener('mouseover', function () {
+        this.classList.add('is-lock');
+        var text = this.querySelector('.text');
+        text.style.display = 'block';
+        var rect = text.getBoundingClientRect();
+        var right = rect.right + 20;
+        var windowWidth = window.innerWidth;
+        if (right > windowWidth) {
+          this.classList.add('is-fixed');
+        }
+      });
+      tooltipBtn.addEventListener('mouseout', function () {
+        this.classList.remove('is-lock');
+        this.classList.remove('is-fixed');
+        var text = this.querySelector('.text');
+        text.style.display = 'none';
+      });
+    }
+
+    /**
+     * テーブルソートの定義
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+
+    var sortTables = document.querySelectorAll('.js-sortable');
+
+    for (var _i12 = 0; _i12 < sortTables.length; _i12++) {
+        var table = sortTables[_i12];
+    
+        var draggedRow = null;
+    
+        table.addEventListener('dragstart', (event) => {
+            draggedRow = event.target.closest('tr');
+            if (draggedRow) {
+                draggedRow.classList.add('dragging');
+            }
+        });
+    
+        table.addEventListener('dragend', (event) => {
+            if (draggedRow) {
+                draggedRow.classList.remove('dragging');
+                draggedRow = null;
+            }
+        });
+    
+        table.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const targetRow = event.target.closest('tr');
+            if (targetRow && targetRow !== draggedRow) {
+                targetRow.classList.add('drag-over');
+            }
+        });
+    
+        table.addEventListener('dragleave', (event) => {
+            const targetRow = event.target.closest('tr');
+            if (targetRow) {
+                targetRow.classList.remove('drag-over');
+            }
+        });
+    
+        table.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const targetRow = event.target.closest('tr');
+            if (targetRow && targetRow !== draggedRow) {
+                targetRow.classList.remove('drag-over');
+                const tbody = table.querySelector('tbody');
+                if (tbody) {
+                    tbody.insertBefore(draggedRow, targetRow.nextSibling);
+                }
+            }
+        });
+    }
 });

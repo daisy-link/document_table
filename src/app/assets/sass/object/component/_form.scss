@@ -64,6 +64,10 @@ input[type=file] {
     margin-bottom: 5px;
 }
 
+input[type=color] {
+    background:none!important;
+}
+
 .errorText {
     color: var(--color-error);
 }
