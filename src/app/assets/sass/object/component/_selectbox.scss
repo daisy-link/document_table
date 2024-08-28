@@ -1,0 +1,38 @@
+@use "../../module/import" as *;
+/*
+*
+* selectbox
+*
+*/
+.c-selectbox {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 5px;
+    &::after {
+        position: absolute;
+        right: 15px;
+        width: 10px;
+        height: 7px;
+        background-color: var(--bordercolor-input);
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        content: '';
+        pointer-events: none;
+    }
+    select {
+        border: 1px solid var(--bordercolor-input);
+        padding: 10px 40px 10px 20px;
+        border-radius: 4px;
+        width: 100%;
+        background-color: var(--color-white);
+        appearance: none;
+        min-width: 150px;
+        height: 100%;
+        @include fs(14);
+        cursor: pointer;
+        &.is-error {
+            border: 1px solid var(--color-error);
+        }
+    }
+    
+}

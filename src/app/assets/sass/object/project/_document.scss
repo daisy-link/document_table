@@ -1,0 +1,173 @@
+@use "../../module/import" as *;
+/*
+*
+* document
+*
+*/
+.p-document {
+
+    &__head {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        h1{
+            @include fs(22);
+            font-weight: bold;
+        }
+        p {
+            @include fs(12);
+        }
+        time {
+            display: block;
+            margin-bottom: 5px;
+            width: 80px;
+            text-align: center;
+            border-radius: 100vh;
+            background-color: var(--bordercolor-lightgray);
+            @include fs(10);
+            span {
+                font-weight: bold;
+            }
+
+        }
+        ul {
+            display: flex;
+            li {
+                margin: 0 3px;
+            }
+        }
+    }
+
+    &__item {
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+        border-bottom: solid 1px var(--bordercolor-gray);
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 0px;
+            margin-bottom: 0px;
+        }
+    }
+    &__itemHead {
+        h2{
+            @include fs(14);
+            font-weight: bold;
+            span {
+                margin: 0 10px;
+                @include fs(16);
+                &::after {
+                    content: ']';
+                }
+                &::before {
+                    content: '[';
+                }
+            }
+        }
+        p {
+            margin-top: 10px;
+            @include fs(12);
+        }
+    }
+    &__table {
+        margin-top: 10px;
+        thead {
+            th {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            }
+        }
+        h3 {
+            @include fs(14);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse:  collapse;
+            border: solid 1px var(--bordercolor-table);
+        }
+        tr {
+            position: relative;
+        }
+        th,td {
+            padding: 5px 5px;
+            border: dotted 1px var(--bordercolor-table);
+            border-right: solid 1px var(--bordercolor-table);
+            vertical-align: top;
+        }
+        th {
+            @include fs(10);
+            font-weight: normal;
+            background-color: var(--bordercolor-lightgray);
+            border-bottom: solid 1px var(--bordercolor-table);
+        }
+        tr {
+            th:nth-child(1),
+            td:nth-child(1) {
+                text-align: center;
+                width: 40px;
+            }
+        }
+        &.--entity {
+            th {
+                text-align: center;
+            }
+            tr {
+                td:nth-child(2),
+                td:nth-child(3) {
+                    width: 250px;
+                }
+                td:nth-child(4) {
+                    width: 150px;
+                    text-align: center;
+                }
+            }
+        }
+        &.--table {
+            tr {
+                th {
+                    text-align: center;
+                }
+                td:nth-child(2),
+                td:nth-child(3) {
+                    width: 250px;
+                }
+                td:nth-child(4) {
+                    width: 150px;
+                    text-align: center;
+                }
+                td:nth-child(5),
+                td:nth-child(6) {
+                    width: 50px;
+                    text-align: center;
+                }
+                td:nth-child(7),
+                td:nth-child(8) {
+                    width: 100px;
+                    text-align: center;
+                }
+            }
+        }
+        &.--index {
+            tr {
+                th {
+                    text-align: center;
+                }
+                td:nth-child(2),
+                td:nth-child(3) {
+                    width: 280px;
+                }
+                td:nth-child(4),
+                td:nth-child(5) {
+                    width: 100px;
+                    text-align: center;
+                }
+            }
+        }
+        .--mark {
+            background-color: var(--color-lightorange);
+        }
+    }
+
+}

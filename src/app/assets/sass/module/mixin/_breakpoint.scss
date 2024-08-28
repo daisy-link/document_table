@@ -1,0 +1,32 @@
+//*
+//* breakpoints
+//*
+
+$breakpoints: (
+    ssm: 500px,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+) !default;
+
+@mixin mq($type, $bp1, $bp2:0) {
+    @if ($type == min) {
+        @media screen and (min-width: #{map-get($breakpoints, $bp1)}) {
+        @content;
+        }
+    } @else if ($type == max) {
+        $width: map-get($breakpoints, $bp1);
+        $width: $width - 1px;
+        @media screen and (max-width: #{$width}) {
+        @content;
+        }
+    } @else if ($type == bw) { // bw → between
+        $width: map-get($breakpoints, $bp2);
+        $width: $width - 1px;
+        @media screen and (min-width: #{map-get($breakpoints, $bp1)})
+        and (max-width: #{$width}) {
+        @content;
+        }
+    }
+}

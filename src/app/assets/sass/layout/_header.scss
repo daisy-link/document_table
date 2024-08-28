@@ -1,0 +1,25 @@
+@use "../module/import" as *;
+/*
+*
+* header
+*
+*/
+.l-header {
+    width: 100%;
+    background-color: var(--color-white);
+    padding: 10px 30px;
+    box-shadow: 0 1px 10px 0 rgba( 31, 38, 135, .10);
+    display: flex;
+    height: 55px;
+    position: fixed;
+    z-index: 9999;
+    @include mq(max, md) {
+        padding: 10px 15px;
+    }
+    hgroup {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+}

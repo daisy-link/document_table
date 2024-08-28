@@ -11,3 +11,5 @@ coding/dist/*
 src/app/vendor/*
 src/database/*
 !src/database/.gitkeep
+
+/node_modules/*

@@ -1,0 +1,10 @@
+@use "../module/import" as *;
+/*
+*
+* main
+*
+*/
+.l-main {
+    min-height: calc(100% - 50px);
+    display: flex;
+}

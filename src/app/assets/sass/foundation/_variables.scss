@@ -1,0 +1,44 @@
+/*
+*
+* variables
+*
+*/
+
+:root {
+    // font-family
+    --font-base: font-family: "M PLUS 1p", sans-serif;
+
+    // background-color
+    --bgcolor-base: #f7f8fc;
+
+    // font-color
+    --fontcolor-base: #333333;
+    --fontcolor-dark: #3a3851;
+    --fontcolor-supplDark: #5c5c5c;
+    --fontcolor-linkhover: #031882;
+    --fontcolor-lightgray: #9b9b9b;
+    --fontcolor-orange: #e87a04;
+
+    // color
+    --color-dark: #3a3851;
+    --color-white: #FFF;
+    --color-lightgblue: #1d4c94;
+    --color-clearblue: #a4c2f3;
+    // error
+    --color-error: #dc3545;
+
+    // button
+    --color-redDark:#b40000;
+    --color-darkblue:#073c7e;
+    --color-lightorange:#fee7d0;
+
+    // shadow
+    --shadow-box: 0 1px 5px 0 rgba(31, 38, 135, 0.1);
+    --shadow-inset-box: 0 0px 2px 1px rgba(31, 38, 135, 0.4) inset;
+    
+    // border-color
+    --bordercolor-table: #898989;
+    --bordercolor-lightgray: #ededed;
+    --bordercolor-gray: #cccccc;
+    --bordercolor-input: #9a9da0;
+}

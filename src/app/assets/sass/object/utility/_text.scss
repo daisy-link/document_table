@@ -1,0 +1,35 @@
+@use "../../module/import" as *;
+/*
+*
+* utility text
+*
+*/
+.u-text--left {
+    text-align: left;
+}
+.u-text--center {
+    text-align: center;
+}
+.u-text--right {
+    text-align: right;
+}
+.u-text-hangingIndent {
+    padding-left:1em;
+    text-indent:-1em;
+}
+.u-text-caution {
+    @include fs(11);
+    color: var(--fontcolor-orange);
+}
+.u-text-suppl {
+    @include fs(11);
+    color: var(--fontcolor-supplDark);
+}
+.u-text-exp {
+    @include fs(11);
+    color: var(--fontcolor-lightgray);
+}
+
+.u-text-lightgray {
+    color: var(--fontcolor-lightgray);
+}

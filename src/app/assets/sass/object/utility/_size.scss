@@ -1,0 +1,27 @@
+@use "../../module/import" as *;
+/*
+*
+* utility width
+*
+*/
+.u-width-l {
+    width: 100%!important;
+}
+.u-width-m {
+    width: 50%!important;
+    min-width: 300px;
+    @include mq(max, sm) {
+        min-width: 100%;
+    }
+}
+.u-width-sm {
+    width: 25%!important;
+    min-width: 200px;
+    @include mq(max, sm) {
+        min-width: 100%;
+    }
+}
+.u-width-ssm {
+    width: 10%!important;
+    min-width: 100px;
+}

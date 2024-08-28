@@ -1,0 +1,23 @@
+@use "../../module/import" as *;
+/*
+*
+* print
+*
+*/
+@media print {
+    @page {
+        margin: 0mm 5mm;
+        size: A4 portrait; //横の場合はlandscape
+    }
+    body {
+        background-color: #FFF;
+    }
+    .l-header,
+    .l-sidenavi {
+        display: none;
+    }
+    .l-contents,
+    .c-box {
+        padding: 0;
+    }
+}

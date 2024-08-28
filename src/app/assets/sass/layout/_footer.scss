@@ -1,0 +1,20 @@
+@use "../module/import" as *;
+/*
+*
+* footer
+*
+*/
+.l-footer {
+    padding-bottom: 15px;
+    &__copyright {
+        height: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include fs(11);
+        line-height: 1;
+        i {
+            @include fs(18);
+        }
+    }
+}

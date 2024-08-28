@@ -1,0 +1,13 @@
+@use "../module/import" as *;
+/*
+*
+* contents
+*
+*/
+.l-contents {
+    padding: 20px;
+    width: 100%;
+    @include mq(max, md) {
+        padding: 20px 10px;
+    }
+}

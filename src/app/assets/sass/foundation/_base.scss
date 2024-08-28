@@ -1,0 +1,49 @@
+@use "../module/import" as *;
+/*
+*
+* base
+*
+*/
+*,*::before,*::after {
+    box-sizing: border-box;
+}
+* {
+}
+html {
+    height: 100%;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+body {
+    height: 100%;
+    background-color: var(--bgcolor-base);
+    font-family: var(--font-base);
+    @include fs(13);
+    line-height: 1.8;
+    color: var(--fontcolor-base);
+}
+a {
+    color: var(--fontcolor-dark);
+    text-decoration: none;
+    transition: .3s;
+}
+a:hover {
+    color: var(--fontcolor-linkhover);
+    transition: .3s;
+}
+label {
+    cursor: pointer;
+}
+form {
+    width: 100%;
+}
+i {
+    margin: 0 5px;
+    line-height: 1;
+    font-style: normal;
+}
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--bordercolor-lightgray);
+}

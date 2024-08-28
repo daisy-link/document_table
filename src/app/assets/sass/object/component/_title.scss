@@ -1,0 +1,14 @@
+@use "../../module/import" as *;
+/*
+*
+* title
+*
+*/
+.c-ttl {
+    @include fs(20);
+    margin-bottom: 20px;
+}
+.c-subTtl {
+    @include fs(15);
+    margin-bottom: 10px;
+}

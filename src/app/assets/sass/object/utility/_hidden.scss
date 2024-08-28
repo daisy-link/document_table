@@ -1,0 +1,18 @@
+@use "../../module/import" as *;
+/*
+*
+* utility hidden
+*
+*/
+.u-sp {
+    display: none;
+    @include mq(max, md) {
+        display: block;
+    }
+}
+.u-ps {
+    display: block;
+    @include mq(max, md) {
+        display: none;
+    }
+}

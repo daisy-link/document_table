@@ -1,0 +1,37 @@
+@use "../../module/import" as *;
+/*
+*
+* sidesubmenu
+*
+*/
+
+.c-sideSubMenu {
+    width: 250px;
+    border-right: 1px solid var(--bordercolor-lightgray);
+    padding-right: 25px;
+    margin-right: 25px;
+    &__ttl {
+        margin-bottom: 10px;
+        font-weight: bold;
+        @include fs(11);
+    }
+    hr {
+        margin: 20px 0;
+    }
+    li {
+
+        a {
+            width: 100%;
+            margin: 0 auto;
+            display: block;
+            padding: 10px 0;
+            &:hover {
+                opacity: .5;
+            }
+            i {
+                text-align: center;
+                width: 30px;
+            }
+        }
+    }
+}

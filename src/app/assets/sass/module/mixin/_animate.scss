@@ -1,0 +1,7 @@
+//*
+//* animate
+//*
+$easeOutQuart: cubic-bezier(.165, .84, .44, 1);
+@mixin transition($elm, $speed) {
+    transition: $elm $easeOutQuart $speed;
+}

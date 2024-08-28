@@ -1,5 +1,4 @@
 gulp:
-	cd coding && \
 	node_modules/.bin/gulp
 up-build:
 	docker compose up --build
