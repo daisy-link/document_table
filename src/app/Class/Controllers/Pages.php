@@ -295,6 +295,71 @@ class Pages
     }
 
     /**
+     * 定義書のエクスポート・ダウンロード
+     *
+     * @return void
+     */
+    public function inout()
+    {
+        $request = Flight::request();
+        if ($request->method == 'POST') {
+            if (Utils::validCSRF()) {
+
+                try {
+                    $objFile = new File();
+
+                    if ($_FILES['zipFile']['tmp_name']) {
+
+                        $tmpDir = 'tmp/';
+
+                        if (!$objFile->has($tmpDir)) {
+                            $objFile->bindDir($tmpDir);
+                        } 
+
+                        $zip = new \ZipArchive();
+
+                        if ($zip->open($_FILES['zipFile']['tmp_name']) === true) {
+                            $zip->extractTo(EXPORT_FILE_PATH . $tmpDir);
+                            $zip->close();
+                        } else {
+                            throw new Exception('ZIPファイルを開けませんでした。');
+                        }
+
+                        $targetFiles = [DATABASE_DEFINITION_JSON_FILE, TABLE_LOGICAL_CSV_FILE, COMMON_FIELD_LOGICAL_CSV_FILE, DETAIL_FIELD_LOGICAL_CSV_FILE];
+                        $missingFiles = [];
+
+                        foreach ($targetFiles as $file) {
+                            $sourcePath = $tmpDir . $file;
+                            if (!$objFile->has($sourcePath)) {
+                                $missingFiles[] = $file;
+                            }
+                        }
+
+                        if (!empty($missingFiles)) {
+                            throw new Exception('必要なファイルが見つかりませんでした: ' . implode(', ', $missingFiles));
+                        }
+                        foreach ($targetFiles as $file) {
+                            $sourcePath = $tmpDir . $file;
+                            $objFile->move($sourcePath, $file);
+                        }
+                        $objFile->deleteDir($tmpDir);
+                    }
+
+                    if (empty($this->errors)) {
+                        Utils::setMessage(['success: 定義ファイルのインポートが完了しました。']);
+                        $this->assign['reload'] = true;
+                    }
+                } catch (Exception $e) {
+                    $this->assign['errors'][] = 'failed: ' . $e->getMessage();
+                }
+
+            } else {
+                $this->assign['errors'][] = 'failed: 不正なデータ送信がありました。';
+            }
+        }
+    }
+
+    /**
      * 定義書の削除
      *
      * @return void
@@ -323,6 +388,48 @@ class Pages
             } else {
                 $this->assign['errors'][] = 'failed: 不正なデータ送信がありました。';
             }
+        }
+    }
+
+    /**
+     * 定義ファイルのダウンロード
+     *
+     * @return void
+     */
+    public function download()
+    {
+        try {
+            $zip = new \ZipArchive();
+            $day = new \DateTime();
+            $zipFileName = 'database_' . $day->format('YmdGis') . '.zip';
+
+            $tmpFile = tempnam(sys_get_temp_dir(), 'zip');
+
+            if ($zip->open($tmpFile, ZipArchive::OVERWRITE) === true) {
+                $handle = opendir(EXPORT_FILE_PATH);
+
+                while (false !== ($file = readdir($handle))) {
+                    if (preg_match('/\.json$|\.csv$/i', $file)) {
+                        $zip->addFile(EXPORT_FILE_PATH . $file, $file);
+                    }
+                }
+
+                $zip->close();
+                closedir($handle);
+
+                header('Content-Type: application/zip');
+                header('Content-Disposition: attachment; filename=' . $zipFileName);
+                header('Content-Length: ' . filesize($tmpFile));
+                readfile($tmpFile);
+
+                unlink($tmpFile);
+                exit;
+
+            } else {
+                throw new Exception('Could not create ZIP file');
+            }
+        } catch (Exception $e) {
+            $errors[] = 'Connection failed: ' . $e->getMessage();
         }
     }
 

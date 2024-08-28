@@ -28,6 +28,26 @@ class File
         }
     }
 
+    public function bindDir($name = '')
+    {
+        try {
+            $this->flyfiles->createDirectory($name);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function move($from = '', $to = '')
+    {
+        try {
+            if ($this->flyfiles->has($from)) {
+                $this->flyfiles->move($from, $to);
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function bindFile($name = '', $datas = '')
     {
         try {
@@ -69,6 +89,19 @@ class File
             throw new Exception($e->getMessage());
         }
         return $content;
+    }
+
+    public function deleteDir($name = '')
+    {
+        try {
+            if ($this->flyfiles->directoryExists($name)) {
+                $this->flyfiles->deleteDirectory($name);
+            } else {
+                throw new Exception('指定されたパスはディレクトリではありません ');
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function deletes($files = [])

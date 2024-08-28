@@ -8,6 +8,7 @@
     <li><a href="<?php echo ROOT_PATH; ?>setting/general"><i>-</i><span>General</span></a></li>
     <li><a href="<?php echo ROOT_PATH; ?>setting/addition"><i>-</i><span>Addition</span></a></li>
     <li><a href="<?php echo ROOT_PATH; ?>setting/connect"><i>-</i><span>DB connect</span></a></li>
+    <li><a href="<?php echo ROOT_PATH; ?>setting/inout"><i>-</i><span>Import Export</span></a></li>
 </ul>
 <hr>
 <ul>
@@ -17,5 +18,6 @@
 <h3 class="c-sideSubMenu__ttl">Setting</h3>
 <ul>
     <li><a href="<?php echo ROOT_PATH; ?>setting/connect"><i>-</i><span>DB connect</span></a></li>
+    <li><a href="<?php echo ROOT_PATH; ?>setting/inout"><i>-</i><span>Import</span></a></li>
 </ul>
 <?php endif; ?>

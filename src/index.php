@@ -50,6 +50,16 @@ Flight::route('GET|POST /setting/addition', function(){
     Flight::render('layout', ['title' => 'Addition']);
 });
 
+Flight::route('GET|POST /setting/inout', function(){
+    $objPages = new Pages();
+    $objPages->inout();
+    if ($objPages->assign['reload']) {
+        Flight::redirect('/setting/inout');
+    }
+    Flight::render('menu', ['created' => $objPages->assign['created']], 'settingMenu');
+    Flight::render('inout', ['assign' => $objPages->assign], 'mainContent');
+    Flight::render('layout', ['title' => 'Import Export']);
+});
 
 Flight::route('GET|POST /setting/delete', function(){
     $objPages = new Pages();
@@ -62,9 +72,21 @@ Flight::route('GET|POST /setting/delete', function(){
     Flight::render('layout', ['title' => 'Delete']);
 });
 
+Flight::route('/download', function(){
+    $objPages = new Pages();
+    if (!$objPages->assign['created']) {
+        Flight::redirect('/setting/connect');
+    }
+    $objPages->download();
+    Flight::redirect('/setting/inout');
+});
+
 
 Flight::route('/export', function(){
     $objPages = new Pages();
+    if (!$objPages->assign['created']) {
+        Flight::redirect('/setting/connect');
+    }
     $objPages->export();
 });
 
