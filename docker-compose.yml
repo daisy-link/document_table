@@ -19,9 +19,9 @@ services:
       - ./docker/mysql/data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=${DATABASE:-db_document_table}
-      - MYSQL_USER=${USERNAME:-user}
-      - MYSQL_PASSWORD=${USERPASS:-password}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-db_document_table}
+      - MYSQL_USER=${MYSQL_USERNAME:-user}
+      - MYSQL_PASSWORD=${MYSQL_USERPASS:-password}
   phpmyadmin:
     image: phpmyadmin:latest
     volumes:
@@ -30,21 +30,25 @@ services:
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=mysql
-      - PMA_USER=${USERNAME:-user}
-      - PMA_PASSWORD=${USERPASS:-password}
+      - PMA_USER=${MYSQL_USERNAME:-user}
+      - PMA_PASSWORD=${MYSQL_USERPASS:-password}
     ports:
       - 4040:80
     depends_on:
       - mysql
-  sqlserver:
-      image: mcr.microsoft.com/mssql/server:2022-latest
-      container_name: sqlserver2022
-      hostname: sqlserver2022
-      ports:
-        - 1433:1433
-      volumes:
-        - ./docker/mssql/data:/var/opt/mssql/data
-        - ./docker/mssql/log:/var/opt/mssql/log
-        - ./docker/mssql/secrets:/var/opt/mssql/sec
-      env_file: 
-        - sqlserver.env
+  sqlserver:    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver2022
+    hostname: sqlserver2022
+    ports:
+      - 1433:1433
+    volumes:
+      - ./docker/mssql/data:/var/opt/mssql/data
+      - ./docker/mssql/log:/var/opt/mssql/log
+      - ./docker/mssql/secrets:/var/opt/mssql/sec
+    environment:
+      - ACCEPT_EULA=${ACCEPT_EULA:-Y}
+      - TZ=${TZ:-Asia/Tokyo}
+      - MSSQL_COLLATION=${MSSQL_COLLATION:-Japanese_CI_AS}
+      - MSSQL_LCID=${MSSQL_LCID:-1041}
+      - MSSQL_AGENT_ENABLED=${MSSQL_AGENT_ENABLED:-true}
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD:-P@ssw0rd1234}
