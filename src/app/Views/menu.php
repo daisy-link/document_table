@@ -35,6 +35,9 @@
             <li><a href="<?php echo ROOT_PATH; ?>setting/addition"><span>Csv Edit</span></a></li>
         </ul>
     </li>
+</ul>
+<hr>
+<ul>
     <li><a href="<?php echo ROOT_PATH; ?>setting/connect"><i>-</i><span>DB connect</span></a></li>
     <li><a href="<?php echo ROOT_PATH; ?>setting/inout"><i>-</i><span>Import Export</span></a></li>
 </ul>
