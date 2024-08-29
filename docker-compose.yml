@@ -36,7 +36,8 @@ services:
       - 4040:80
     depends_on:
       - mysql
-  sqlserver:    image: mcr.microsoft.com/mssql/server:2022-latest
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver2022
     hostname: sqlserver2022
     ports:
