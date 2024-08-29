@@ -55,6 +55,9 @@ Flight::route('GET|POST /setting/addition/tables', function(){
     if (!$objPages->assign['created']) {
         Flight::redirect('/setting/connect');
     }
+    if ($objPages->menuHandler['tables_Edit']) {
+        Flight::redirect('/setting/addition');
+    }
     $objPages->additionTables();
     if ($objPages->assign['reload']) {
         Flight::redirect('/setting/addition/tables');
@@ -70,7 +73,7 @@ Flight::route('GET|POST /setting/addition/fields', function(){
         Flight::redirect('/setting/connect');
     }
     if ($objPages->menuHandler['common_Field_Edit']) {
-        Flight::redirect('/setting/connect');
+        Flight::redirect('/setting/addition');
     }
     $objPages->additionCommonField();
     if ($objPages->assign['reload']) {

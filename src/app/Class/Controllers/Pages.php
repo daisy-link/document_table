@@ -30,6 +30,7 @@ class Pages
         ];
 
         $this->menuHandler = [
+            'tables_Edit' => null,
             'common_Field_Edit' => null
         ];
 
@@ -53,6 +54,17 @@ class Pages
             }
             if ($objFile->has(TABLE_LOGICAL_CSV_FILE)) {
                 $this->assign['files']['tables'] = ROOT_EXPORT_FILE_URL . TABLE_LOGICAL_CSV_FILE;
+
+                $file = $objFile->read(TABLE_LOGICAL_CSV_FILE);
+                $lines = explode("\n", $file);
+                $lineCount = count($lines);
+                $maxInputVars = ini_get('max_input_vars');
+
+                // メニュー判定
+                if ($lineCount * 5 > $maxInputVars) {
+                    $this->menuHandler['tables_Edit'] = $lineCount * 3;
+                }
+
             }
             if ($objFile->has(COMMON_FIELD_LOGICAL_CSV_FILE)) {
                 $this->assign['files']['common'] = ROOT_EXPORT_FILE_URL . COMMON_FIELD_LOGICAL_CSV_FILE;
