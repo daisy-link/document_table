@@ -145,16 +145,13 @@ class Excel
             $sheet->setCellValue('D' . $i, $table['definition']);
             $sheet->getStyle('D' . $i)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-
+            /** 改行を反映 */
             $comment = str_replace("\r\n", PHP_EOL, $table['comment']);
             $sheet->setCellValue('E' . $i, $comment);
-            
-            // セルに対して折り返し表示を設定
             $sheet->getStyle('E' . $i)->getAlignment()->setWrapText(true);
             
-            // 改行の数をカウント
-            $lineCount = substr_count($comment, PHP_EOL) + 1; // +1 は最後の行をカウントするため
-            
+            /** 行高さ調整 */
+            $lineCount = substr_count($comment, PHP_EOL) + 1;
             $lineHeight = 25;
             $sheet->getRowDimension($i)->setRowHeight($lineCount * $lineHeight);
 
@@ -313,7 +310,17 @@ class Excel
                 $sheet->setCellValue('G' . $i, $item['default']);
                 $sheet->setCellValue('H' . $i, $item['extra']);
                 $sheet->getStyle('D' . $i . ':H' . $i)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                $sheet->setCellValue('I' . $i, $item['comment']);
+
+                /** 改行を反映 */
+                $comment = str_replace("\r\n", PHP_EOL, $item['comment']);
+                $sheet->setCellValue('I' . $i, $comment);
+                $sheet->getStyle('I' . $i)->getAlignment()->setWrapText(true);
+
+                /**行高さ調整 */
+                $lineCount = substr_count($comment, PHP_EOL) + 1;
+                $lineHeight = 25;
+                $sheet->getRowDimension($i)->setRowHeight($lineCount * $lineHeight);
+
 
                 /* 特定行の背景の色をセット */
                 if (!empty($item['bgcolor'])) {

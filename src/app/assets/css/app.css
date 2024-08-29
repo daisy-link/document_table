@@ -1098,6 +1098,15 @@ input[type=color] {
 .c-sideSubMenu hr {
   margin: 20px 0;
 }
+.c-sideSubMenu li.--invalid {
+  display: flex;
+  align-items: center;
+}
+.c-sideSubMenu li.--invalid span:nth-child(1) {
+  opacity: 0.5;
+  margin-right: 8px;
+  text-decoration: line-through;
+}
 .c-sideSubMenu li a {
   width: 100%;
   margin: 0 auto;
@@ -1178,6 +1187,17 @@ input[type=color] {
 .c-table tbody tr:nth-child(even) {
   background-color: var(--color-table-even);
 }
+.c-table.--fieldsEdit td input, .c-table.--tablesEdit td input {
+  margin-bottom: 0px !important;
+  padding: 10px 5px !important;
+  font-size: 11px;
+  font-size: 1.1rem;
+}
+.c-table.--fieldsEdit td textarea, .c-table.--tablesEdit td textarea {
+  padding: 5px !important;
+  font-size: 11px;
+  font-size: 1.1rem;
+}
 .c-table.--tablesEdit thead tr th:nth-child(1) {
   width: 90px;
 }
@@ -1187,19 +1207,11 @@ input[type=color] {
 .c-table.--tablesEdit thead tr th:nth-child(5) {
   width: 90px;
 }
-.c-table.--tablesEdit td input {
-  margin-bottom: 0px !important;
-  padding: 10px 5px !important;
-  font-size: 11px;
-  font-size: 1.1rem;
+.c-table.--fieldsEdit thead tr th:nth-child(1) {
+  width: 90px;
 }
-.c-table.--tablesEdit td textarea {
-  padding: 5px !important;
-  font-size: 11px;
-  font-size: 1.1rem;
-}
-.c-table .drag-over {
-  background-color: var(--color-clearblue) !important;
+.c-table.--fieldsEdit thead tr th:nth-child(2) {
+  width: 250px;
 }
 
 /*

@@ -164,12 +164,22 @@ class Bind
             $fields = [];
             if ($objFile->has(COMMON_FIELD_LOGICAL_CSV_FILE)) {
 
+                $lines = [];
                 $file = $objFile->read(COMMON_FIELD_LOGICAL_CSV_FILE);
-                $lines = explode("\n", $file);
+
+                $fileHandle = fopen('php://memory', 'r+');
+                fwrite($fileHandle, $file);
+                rewind($fileHandle);
+
+                while (($line = fgetcsv($fileHandle)) !== false) {
+                    $lines[] = $line;
+                }
+
+                fclose($fileHandle);
+
                 foreach ($lines as $line) {
-                    $arrLine = str_getcsv($line);
-                    if (isset($arrLine[0])) {
-                        $fields[$arrLine[0]] = $arrLine;
+                    if (isset($line[0])) {
+                        $fields[$line[0]] = $line;
                     }
                 }
                 foreach ($datas['tables'] as &$table) {

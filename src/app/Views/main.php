@@ -60,7 +60,7 @@
     <div class="p-document__itemHead">
       <h2># <?php if ($table['name']) : ?><span><?php Utils::_esc($table['name'] ?? ''); ?></span><?php endif; ?><?php Utils::_esc($table['table'] ?? ''); ?></h2>
       <?php if ($table['comment']) : ?>
-      <p><?php Utils::_esc($table['comment'] ?? ''); ?></p>
+      <p><?php echo nl2br($table['comment']); ?></p>
       <?php endif; ?>
     </div>
     <div class="p-document__table --table">
@@ -95,7 +95,7 @@
             <td><?php echo ($column['null'] == 'YES') ? '' : '×'; ?></td>
             <td><?php echo $column['default']; ?></td>
             <td><?php echo $column['extra']; ?></td>
-            <td><?php Utils::_esc($column['comment'] ?? ''); ?></td>
+            <td><?php echo nl2br($column['comment'] ?? ''); ?></td>
           </tr>
           <?php $count++; endforeach; ?>
         </tbody>

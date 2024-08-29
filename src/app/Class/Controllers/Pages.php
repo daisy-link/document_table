@@ -5,6 +5,9 @@ class Pages
     /** @var array $assign */
     public $assign;
 
+    /** @var array $menu */
+    public $menuHandler;
+
     /**
      * __construct
      */
@@ -25,7 +28,13 @@ class Pages
                 'fields' => '',
             ],
         ];
+
+        $this->menuHandler = [
+            'common_Field_Edit' => null
+        ];
+
         $successes = Utils::getMessage();
+
         if (!empty($successes)) {
             $this->assign['successes'] = $successes;
         }
@@ -47,10 +56,23 @@ class Pages
             }
             if ($objFile->has(COMMON_FIELD_LOGICAL_CSV_FILE)) {
                 $this->assign['files']['common'] = ROOT_EXPORT_FILE_URL . COMMON_FIELD_LOGICAL_CSV_FILE;
+
+                $file = $objFile->read(COMMON_FIELD_LOGICAL_CSV_FILE);
+                $lines = explode("\n", $file);
+                $lineCount = count($lines);
+                $maxInputVars = ini_get('max_input_vars');
+
+                // メニュー判定
+                if ($lineCount * 3 > $maxInputVars) {
+                    $this->menuHandler['common_Field_Edit'] = $lineCount * 3;
+                }
+
             }
             if ($objFile->has(DETAIL_FIELD_LOGICAL_CSV_FILE)) {
                 $this->assign['files']['fields'] = ROOT_EXPORT_FILE_URL . DETAIL_FIELD_LOGICAL_CSV_FILE;
             }
+
+
         } catch (Exception $e) {
             $this->errors[] = 'Connection failed: ' . $e->getMessage();
         }
@@ -337,6 +359,66 @@ class Pages
 
                         $objBind = new Bind();
                         $objFile->bindCsv(TABLE_LOGICAL_CSV_FILE, $tables);
+                        $objBind = new Bind();
+                        $objBind->setDefinition($this->assign['database']);
+                        $objFile->bindFile(DATABASE_DEFINITION_JSON_FILE, json_encode($this->assign['database'], JSON_UNESCAPED_UNICODE));
+                    }
+                } catch (Exception $e) {
+                    $this->assign['errors'][] = 'failed: ' . $e->getMessage();
+                }
+                if (empty($this->assign['errors'])) {
+                    Utils::setMessage(['success: データの更新が完了しました。']);
+                    $this->assign['reload'] = true;
+                }
+            } else {
+                $this->assign['errors'][] = 'failed: 不正なデータ送信がありました。';
+            }
+        }
+    }
+
+
+    /**
+     * 共通フィールドの設定
+     *
+     * @return void
+     */
+    public function additionCommonField()
+    {
+
+        $objFile = new File();
+        $this->assign['fields'] = [];
+
+        if ($objFile->has(COMMON_FIELD_LOGICAL_CSV_FILE)) {
+            $datas = [];
+            $file = $objFile->read(COMMON_FIELD_LOGICAL_CSV_FILE);
+
+            $fileHandle = fopen('php://memory', 'r+');
+            fwrite($fileHandle, $file);
+            rewind($fileHandle);
+
+            while (($line = fgetcsv($fileHandle)) !== false) {
+                $datas[] = $line;
+            }
+
+            fclose($fileHandle);
+
+            $this->assign['fields'] = $datas;
+        }
+
+        $request = Flight::request();
+
+        if ($request->method == 'POST') {
+            if (Utils::validCSRF()) {
+                try {
+                    $postData = $request->data->getData();
+                    $fields = $postData['fields'] ?? [];
+
+                    if (!empty($fields)) {
+
+                        array_unshift($fields, $datas[0]);
+
+                        $objBind = new Bind();
+                        $objFile->bindCsv(COMMON_FIELD_LOGICAL_CSV_FILE, $fields);
                         $objBind = new Bind();
                         $objBind->setDefinition($this->assign['database']);
                         $objFile->bindFile(DATABASE_DEFINITION_JSON_FILE, json_encode($this->assign['database'], JSON_UNESCAPED_UNICODE));

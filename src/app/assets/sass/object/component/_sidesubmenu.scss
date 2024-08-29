@@ -20,6 +20,18 @@
     }
     li {
 
+        &.--invalid {
+            display: flex;
+            align-items: center;
+            span:nth-child(1) {
+                opacity: .5;
+                margin-right: 8px;
+                text-decoration:line-through;
+            }
+        }
+
+
+
         a {
             width: 100%;
             margin: 0 auto;

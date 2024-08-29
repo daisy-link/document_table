@@ -68,6 +68,21 @@
         }
         
     }
+
+    &.--fieldsEdit,
+    &.--tablesEdit {
+        td {
+            input {
+                margin-bottom: 0px !important;
+                padding: 10px 5px !important;
+                @include fs(11);
+            }
+            textarea {
+                padding: 5px !important;
+                @include fs(11);
+            }
+        }
+    }
     &.--tablesEdit {
         thead {
             tr {
@@ -84,20 +99,17 @@
                 }
             }
         }
-        td {
-            input {
-                margin-bottom: 0px !important;
-                padding: 10px 5px !important;
-                @include fs(11);
-            }
-            textarea {
-                padding: 5px !important;
-                @include fs(11);
-            }
-
-        }
     }
-    .drag-over {
-        background-color: var(--color-clearblue) !important;
+    &.--fieldsEdit {
+        thead {
+            tr {
+                th:nth-child(1) {
+                    width: 90px;
+                }
+                th:nth-child(2) {
+                    width: 250px;
+                }
+            }
+        }
     }
 }
