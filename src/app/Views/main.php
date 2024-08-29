@@ -47,7 +47,7 @@
             <td><?php if ($table['name']) : ?><a href="#<?php echo $table['table']; ?>"><?php echo $table['name']; ?></a><?php endif; ?></td>
             <td><a href="#<?php Utils::_esc($table['table'] ?? ''); ?>"><?php Utils::_esc($table['table'] ?? ''); ?></a></td>
             <td><?php echo $table['definition']; ?></td>
-            <td><?php echo $table['comment']; ?></td>
+            <td><?php echo nl2br($table['comment']); ?></td>
           </tr>
           <?php $count++; endforeach; ?>
         </tbody>

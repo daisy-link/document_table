@@ -51,11 +51,19 @@
                             <?php if ($key == 0) : ?>
                             <td class="u-text-nowrap">
                                 <?php Utils::_esc($column ?? ''); ?>
-                                <input type="hidden" name="tables[<?php Utils::_esc($rows[0]); ?>][<?php Utils::_esc($key); ?>]" value="<?php Utils::_esc($column ?? ''); ?>">
+                                <input type="hidden" name="tables[<?php Utils::_esc($id); ?>][<?php Utils::_esc($key); ?>]" value="<?php Utils::_esc($column ?? ''); ?>">
+                            </td>
+                            <?php elseif ($key == 3) : ?>
+                            <td class="u-text-nowrap">
+                                <textarea name="tables[<?php Utils::_esc($id); ?>][<?php Utils::_esc($key); ?>]" maxlength="100"><?php Utils::_esc($column ?? ''); ?></textarea>
+                            </td>
+                            <?php elseif ($key == 2|| $key == 4) : ?>
+                            <td>
+                                <input type="text" name="tables[<?php Utils::_esc($id); ?>][<?php Utils::_esc($key); ?>]" maxlength="10" class="" value="<?php Utils::_esc($column ?? ''); ?>">
                             </td>
                             <?php else: ?>
                             <td>
-                                <input type="text" name="tables[<?php Utils::_esc($rows[0]); ?>][<?php Utils::_esc($key); ?>]" maxlength="50" class="" value="<?php Utils::_esc($column ?? ''); ?>">
+                                <input type="text" name="tables[<?php Utils::_esc($id); ?>][<?php Utils::_esc($key); ?>]" maxlength="50" class="" value="<?php Utils::_esc($column ?? ''); ?>">
                             </td>
                             <?php endif; ?>
                             <?php endforeach; ?>

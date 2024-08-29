@@ -144,7 +144,20 @@ class Excel
             $sheet->getStyle('B' . $i . ':C' . $i)->getAlignment()->setIndent(1);
             $sheet->setCellValue('D' . $i, $table['definition']);
             $sheet->getStyle('D' . $i)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-            $sheet->setCellValue('E' . $i, $table['comment']);
+
+
+            $comment = str_replace("\r\n", PHP_EOL, $table['comment']);
+            $sheet->setCellValue('E' . $i, $comment);
+            
+            // セルに対して折り返し表示を設定
+            $sheet->getStyle('E' . $i)->getAlignment()->setWrapText(true);
+            
+            // 改行の数をカウント
+            $lineCount = substr_count($comment, PHP_EOL) + 1; // +1 は最後の行をカウントするため
+            
+            $lineHeight = 25;
+            $sheet->getRowDimension($i)->setRowHeight($lineCount * $lineHeight);
+
 
             /* 特定行の背景の色をセット */
             if (!empty($table['bgcolor'])) {

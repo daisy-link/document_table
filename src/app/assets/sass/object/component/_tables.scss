@@ -88,7 +88,13 @@
             input {
                 margin-bottom: 0px !important;
                 padding: 10px 5px !important;
+                @include fs(11);
             }
+            textarea {
+                padding: 5px !important;
+                @include fs(11);
+            }
+
         }
     }
     .drag-over {

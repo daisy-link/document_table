@@ -132,14 +132,19 @@ class Bind
             if ($objFile->has(TABLE_LOGICAL_CSV_FILE)) {
 
                 $file = $objFile->read(TABLE_LOGICAL_CSV_FILE);
-                $lines = explode("\n", $file);
-                foreach ($lines as $order => $line) {
-                    $arrLine = str_getcsv($line);
+
+                $fileHandle = fopen('php://memory', 'r+');
+                fwrite($fileHandle, $file);
+                rewind($fileHandle);
+
+                $order = 0;
+                while (($arrLine = fgetcsv($fileHandle)) !== false) {
                     if (isset($arrLine[0])) {
                         $tables[$arrLine[0]] = $arrLine;
-                        $tables[$arrLine[0]]['order'] = $order;
+                        $tables[$arrLine[0]]['order'] = $order++;
                     }
                 }
+                fclose($fileHandle);
 
                 foreach ($datas['tables'] as &$table) {
                     if (isset($tables[$table['table']])) {

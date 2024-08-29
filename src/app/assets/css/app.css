@@ -1190,6 +1190,13 @@ input[type=color] {
 .c-table.--tablesEdit td input {
   margin-bottom: 0px !important;
   padding: 10px 5px !important;
+  font-size: 11px;
+  font-size: 1.1rem;
+}
+.c-table.--tablesEdit td textarea {
+  padding: 5px !important;
+  font-size: 11px;
+  font-size: 1.1rem;
 }
 .c-table .drag-over {
   background-color: var(--color-clearblue) !important;

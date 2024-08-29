@@ -310,20 +310,16 @@ class Pages
             $datas = [];
             $file = $objFile->read(TABLE_LOGICAL_CSV_FILE);
 
-            // UTF-8 BOM (\xEF\xBB\xBF) を削除
-            $bom = "\xEF\xBB\xBF";
-            while (strpos($file, $bom) === 0) {
-                $file = substr($file, 3);
+            $fileHandle = fopen('php://memory', 'r+');
+            fwrite($fileHandle, $file);
+            rewind($fileHandle);
+
+            while (($line = fgetcsv($fileHandle)) !== false) {
+                $datas[] = $line;
             }
 
-            $lines = explode("\n", $file);
-            $lines = array_filter($lines, function($line) {
-                return trim($line) !== '';
-            });
-            $lines = array_values($lines);
-            foreach ($lines as $line) {
-                $datas[] = str_getcsv($line);
-            }
+            fclose($fileHandle);
+
             $this->assign['tables'] = $datas;
         }
 
