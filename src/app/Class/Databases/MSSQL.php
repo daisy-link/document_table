@@ -99,6 +99,8 @@ class MSSQL
                     c.COLUMN_DEFAULT AS isDefault,
                     ep.value AS Comment,
                     i.name AS IndexName,
+                    sc.precision AS Precision,
+                    sc.scale AS Scale,
                     CASE
                         WHEN i.is_primary_key = 1 THEN 'PRI'
                         WHEN i.is_unique = 1 THEN 'UNI'
@@ -120,7 +122,7 @@ class MSSQL
                     ON ic.object_id = i.object_id
                     AND ic.index_id = i.index_id
                 WHERE c.table_schema = :schema_name 
-                  AND c.table_name = :table_name
+                AND c.table_name = :table_name
             ");
             $sql->bindParam(':schema_name', $schema, PDO::PARAM_STR);
             $sql->bindParam(':table_name', $tableName, PDO::PARAM_STR);
@@ -129,13 +131,15 @@ class MSSQL
             foreach ($sql->fetchAll(PDO::FETCH_ASSOC) as $row) {
                 // max_length が -1 の場合には '(MAX)' を設定
                 $maxLength = ($row['max_length'] == -1) ? 'MAX' : $row['max_length'];
-    
+
                 // max_length がある場合に Type に追加
                 $typeWithLength = $row['Type'];
-                if (!empty($maxLength)) {
+                if ($typeWithLength == 'decimal' || $typeWithLength == 'numeric') {
+                    $typeWithLength .= "({$row['Precision']},{$row['Scale']})";
+                } elseif (!empty($maxLength)) {
                     $typeWithLength .= "({$maxLength})";
                 }
-    
+
                 // デフォルト値の修正
                 $default = $row['isDefault'];
                 if ($default === null) {
