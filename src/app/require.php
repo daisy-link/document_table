@@ -1,8 +1,11 @@
 <?php
 require_once realpath(dirname(__FILE__)) . '/vendor/autoload.php';
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->safeLoad();
+
 /* settings */
-define('ROOT_PATH', '/');
+define('ROOT_PATH', $_ENV['ROOT_PATH'] ?? '/');
 define('ROOT_EXPORT_FILE_PATH', '/database/');
 $rootPath = rtrim(ROOT_PATH, '/');
 $exportFilePath = ltrim(ROOT_EXPORT_FILE_PATH, '/');

@@ -16,6 +16,15 @@ composer dumpautoload
 - WEB APP ： http://localhost/
 - phpmyadmin ： http://localhost:4040/
 
+# 下層階層に設置する場合
+
+```
+cd /var/www/html
+mv .env.example .env
+```
+上記の .env の ROOT_PATH にパスを指定
+
+
 
 ### 簡単な利用方法
 
