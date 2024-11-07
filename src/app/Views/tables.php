@@ -18,13 +18,12 @@
 
         <div class="c-form__leadText">
             <p>テーブル名に対して論理名・コメント・色の設定ができます。<br>設定後に「update」をクリックしてください。</p>
-            <p class="u-text-suppl">※ ドラック＆ドロップで並び変えも可能となります。</p>
+            <p class="u-text-caution">※ ドラック＆ドロップで並び変えも可能となります。</p>
         </div>
 
         <dl class="c-formItem">
             <dt class="c-formItem__head">
                 <div class="c-formItem__ttl"> Tables definition </div>
-                <p class="u-text-suppl"></p>
             </dt>
 
             <dd>

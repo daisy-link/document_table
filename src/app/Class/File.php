@@ -61,9 +61,20 @@ class File
     {
         try {
 
+            $hasBom = false;
+
+            if ($this->flyfiles->has($name)) {
+                $content = $this->flyfiles->read($name);
+                $hasBom = (substr($content, 0, 3) === "\xEF\xBB\xBF");
+            } else {
+                throw new Exception('指定されたファイルはありません ');
+            }
+
             $file = fopen(EXPORT_FILE_PATH . $name, 'w');
 
-            fwrite($file, "\xEF\xBB\xBF");
+            if (!$hasBom) {
+                fwrite($file, "\xEF\xBB\xBF");
+            }
 
             foreach ($datas as $row) {
                 $row = array_map(function($value) {

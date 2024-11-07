@@ -32,6 +32,21 @@
             <?php else : ?>
                 <li><a href="<?php echo ROOT_PATH; ?>setting/addition/fields"><span>Common Field Edit</span></a></li>
             <?php endif; ?>
+
+            <?php if ($menuHandler['common_Field_Edit']) : ?>
+                <li class="--invalid">
+                    <span>Common Field Edit</span>
+                    <span class="c-tooltip">
+                        <em>?</em>
+                        <span class="text">max_input_vars を<?php Utils::_esc($menuHandler['common_Field_Edit']); ?>以上にしてください。 </span>
+                    </span>
+                </li>
+            <?php else : ?>
+                <li><a href="<?php echo ROOT_PATH; ?>setting/addition/detail"><span>Detail Field Edit</span></a></li>
+            <?php endif; ?>
+
+
+
             <li><a href="<?php echo ROOT_PATH; ?>setting/addition"><span>Csv Edit</span></a></li>
         </ul>
     </li>

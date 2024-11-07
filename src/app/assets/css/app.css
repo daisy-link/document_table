@@ -399,6 +399,7 @@ th {
   --color-white: #FFF;
   --color-lightgblue: #1d4c94;
   --color-clearblue: #a4c2f3;
+  --color-clearlightblue: #eafffd;
   --color-error: #dc3545;
   --color-redDark:#b40000;
   --color-darkblue:#073c7e;
@@ -1187,13 +1188,13 @@ input[type=color] {
 .c-table tbody tr:nth-child(even) {
   background-color: var(--color-table-even);
 }
-.c-table.--fieldsEdit td input, .c-table.--tablesEdit td input {
+.c-table.--detailEdit td input, .c-table.--fieldsEdit td input, .c-table.--tablesEdit td input {
   margin-bottom: 0px !important;
   padding: 10px 5px !important;
   font-size: 11px;
   font-size: 1.1rem;
 }
-.c-table.--fieldsEdit td textarea, .c-table.--tablesEdit td textarea {
+.c-table.--detailEdit td textarea, .c-table.--fieldsEdit td textarea, .c-table.--tablesEdit td textarea {
   padding: 5px !important;
   font-size: 11px;
   font-size: 1.1rem;
@@ -1208,10 +1209,19 @@ input[type=color] {
   width: 90px;
 }
 .c-table.--fieldsEdit thead tr th:nth-child(1) {
-  width: 90px;
+  width: 150px;
 }
 .c-table.--fieldsEdit thead tr th:nth-child(2) {
   width: 250px;
+}
+.c-table.--detailEdit thead tr th:nth-child(1) {
+  width: 150px;
+}
+.c-table.--detailEdit thead tr th:nth-child(2) {
+  width: 250px;
+}
+.c-table.--detailEdit thead tr th:nth-child(4) {
+  width: 90px;
 }
 
 /*
@@ -1293,6 +1303,29 @@ input[type=color] {
 }
 .c-tooltip:not(.js-tooltip):hover .text, .c-tooltip:not(.js-tooltip):hover:after {
   display: block;
+}
+
+/*
+*
+* drag
+*
+*/
+[draggable=true]:hover {
+  cursor: grab;
+}
+
+[draggable=true]:active {
+  cursor: grabbing;
+}
+
+.dragging {
+  cursor: grabbing !important;
+}
+
+.drag-over td {
+  padding-bottom: 50px;
+  background-color: var(--color-clearlightblue);
+  transition: 0.3s;
 }
 
 /*

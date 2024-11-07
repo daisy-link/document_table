@@ -202,10 +202,12 @@ class Bind
 
                 $file = $objFile->read(DETAIL_FIELD_LOGICAL_CSV_FILE);
                 $lines = explode("\n", $file);
+                $order = 0;
                 foreach ($lines as $line) {
                     $arrLine = str_getcsv($line);
                     if (isset($arrLine[0]) && isset($arrLine[0])) {
                         $detaills[$arrLine[0]][$arrLine[1]] = $arrLine;
+                        $detaills[$arrLine[0]][$arrLine[1]]['order'] = $order++;
                     }
                 }
 
@@ -229,6 +231,8 @@ class Bind
                             if (isset($detaill[4]) && !empty($detaill[4])) {
                                 $column['bgcolor'] = $detaill[4] ?? '';
                             }
+
+                            $column['order'] = $detaill['order'] ?? '';
                         }
                     }
                 }
@@ -237,11 +241,21 @@ class Bind
             throw new Exception($e->getMessage());
         }
 
+        /** テーブルの並び順を調整 */
         usort($datas['tables'], function ($a, $b) {
             $orderA = isset($a['order']) ? intval($a['order']) : 0;
             $orderB = isset($b['order']) ? intval($b['order']) : 0;
             return $orderA - $orderB;
         });
+        /** フィールドの並び順を調整 */
+        foreach ($datas['tables'] as &$tables) {
+            usort($tables['columns'], function ($a, $b) {
+                $orderA = isset($a['order']) ? intval($a['order']) : 0;
+                $orderB = isset($b['order']) ? intval($b['order']) : 0;
+                return $orderA - $orderB;
+            });
+        }
+
     }
 
     public function logicalTables($datas = [])

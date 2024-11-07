@@ -1,0 +1,21 @@
+@use "../../module/import" as *;
+/*
+*
+* drag
+*
+*/
+
+[draggable="true"]:hover {
+    cursor: grab;
+}
+[draggable="true"]:active {
+    cursor: grabbing;
+}
+.dragging {
+    cursor: grabbing !important;
+}
+.drag-over td {
+    padding-bottom: 50px;
+    background-color: var(--color-clearlightblue);
+    transition: .3s;
+}

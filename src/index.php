@@ -84,6 +84,28 @@ Flight::route('GET|POST /setting/addition/fields', function(){
     Flight::render('layout', ['title' => 'Addition - Common Fields Edit']);
 });
 
+
+Flight::route('GET|POST /setting/addition/detail(/@table)', function(?string $table = null) {
+
+    $objPages = new Pages();
+    if (!$objPages->assign['created']) {
+        Flight::redirect('/setting/connect');
+    }
+    if ($objPages->menuHandler['common_Field_Edit']) {
+        Flight::redirect('/setting/addition');
+    }
+    $objPages->additionDetailField($table);
+    if ($objPages->assign['reload']) {
+
+        $reload = '/setting/addition/detail/' . $table;
+        Flight::redirect($reload);
+    
+    }
+    Flight::render('menu', ['created' => $objPages->assign['created'] , 'menuHandler' => $objPages->menuHandler], 'settingMenu');
+    Flight::render('detail', ['assign' => $objPages->assign], 'mainContent');
+    Flight::render('layout', ['title' => 'Addition - Detail Fields Edit']);
+});
+
 Flight::route('GET|POST /setting/inout', function(){
     $objPages = new Pages();
     $objPages->inout();

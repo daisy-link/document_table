@@ -328,7 +328,6 @@ class Pages
         }
     }
 
-
     /**
      * テーブルの設定
      *
@@ -388,7 +387,6 @@ class Pages
         }
     }
 
-
     /**
      * 共通フィールドの設定
      *
@@ -435,6 +433,122 @@ class Pages
                         $objBind->setDefinition($this->assign['database']);
                         $objFile->bindFile(DATABASE_DEFINITION_JSON_FILE, json_encode($this->assign['database'], JSON_UNESCAPED_UNICODE));
                     }
+                } catch (Exception $e) {
+                    $this->assign['errors'][] = 'failed: ' . $e->getMessage();
+                }
+                if (empty($this->assign['errors'])) {
+                    Utils::setMessage(['success: データの更新が完了しました。']);
+                    $this->assign['reload'] = true;
+                }
+            } else {
+                $this->assign['errors'][] = 'failed: 不正なデータ送信がありました。';
+            }
+        }
+    }
+
+    /**
+     * 個別フィールドの設定
+     *
+     * @return void
+     */
+    public function additionDetailField($table)
+    {
+
+        $objFile = new File();
+
+        $this->assign['tables'] = [];
+        $this->assign['fields'] = [];
+        $this->assign['target'] = '';
+        $updateColumnsNum = 0;
+
+        if ($objFile->has(TABLE_LOGICAL_CSV_FILE)) {
+            $datas = [];
+            $file = $objFile->read(TABLE_LOGICAL_CSV_FILE);
+
+            $fileHandle = fopen('php://memory', 'r+');
+            fwrite($fileHandle, $file);
+            rewind($fileHandle);
+
+            while (($line = fgetcsv($fileHandle)) !== false) {
+                $datas[] = $line;
+            }
+
+            fclose($fileHandle);
+
+            $this->assign['tables'] = $datas;
+        }
+
+        if ($table) {
+
+            $this->assign['target'] = $table;
+
+            if ($objFile->has(DETAIL_FIELD_LOGICAL_CSV_FILE)) {
+                $datas = [];
+                $someDatas = [];
+
+                $file = $objFile->read(DETAIL_FIELD_LOGICAL_CSV_FILE);
+    
+                $fileHandle = fopen('php://memory', 'r+');
+                fwrite($fileHandle, $file);
+                rewind($fileHandle);
+    
+                while (($line = fgetcsv($fileHandle)) !== false) {
+                    if ($line[0] == $table) {
+                        $someDatas[] = $line;
+                        $updateColumnsNum++;
+                    }
+                    $datas[] = $line;
+                }
+                fclose($fileHandle);
+                array_unshift($someDatas, $datas[0]);
+                $this->assign['fields'] = $someDatas;
+            }
+        }
+
+
+        $request = Flight::request();
+
+        if ($request->method == 'POST') {
+            if (Utils::validCSRF()) {
+
+                try {
+
+                    $postData = $request->data->getData();
+                    $target = $postData['target'] ?? '';
+                    $fields = $postData['fields'] ?? [];
+
+                    if (!$target || !isset($this->assign['database']['tables']) || empty($fields)) {
+                        throw new Exception('The target table could not be referenced.');
+                    }
+
+                    $inserts = [];
+
+                    foreach ($fields as $id => $field) {
+                        foreach ($datas as $key => $row) {
+                            if ($row[0] == $field[0] && $row[1] == $field[1] ) {
+                                $inserts[] = $field;
+                                unset($datas[$key]);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (count($inserts) != $updateColumnsNum) {
+                        throw new Exception('The field to be updated could not be obtained successfully.');
+                    }
+
+                    foreach ($inserts as $insert) {
+                        $datas[] = $insert;
+                    }
+
+                    if (!empty($inserts)) {
+                        $objBind = new Bind();
+                        $objFile->bindCsv(DETAIL_FIELD_LOGICAL_CSV_FILE, $datas);
+                        $objBind = new Bind();
+                        $objBind->setDefinition($this->assign['database']);
+                        $objFile->bindFile(DATABASE_DEFINITION_JSON_FILE, json_encode($this->assign['database'], JSON_UNESCAPED_UNICODE));
+                    }
+
                 } catch (Exception $e) {
                     $this->assign['errors'][] = 'failed: ' . $e->getMessage();
                 }

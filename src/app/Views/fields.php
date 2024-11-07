@@ -17,9 +17,9 @@
         <?php endif; ?>
 
         <div class="c-form__leadText">
-            <p>共通のフィールド名（同じ物理名）に対して論理名の設定ができます。<br>設定後に「update」をクリックしてください。</p>
-            <p class="u-text-caution">※ 各テーブル毎にフィールド名を設定する場合は、CSV を利用してください。</p>
-            <p class="u-text-caution">※ 論理名が、全フィールドに反映されますが、CSVで個別に設定しているものが優先されます。</p>
+            <p>共通のフィールド名（同じ物理名）に対して一括で論理名の設定ができます。<br>設定後に「update」をクリックしてください。</p>
+            <p class="u-text-caution">※ 各テーブル毎にフィールド名を設定する場合は、「Detail Field Edit」 または、「Csv Edit」 を利用してください。</p>
+            <p class="u-text-caution">※ 論理名が、全フィールドに反映されますが、個別に設定しているものが優先されます。</p>
         </div>
 
         <dl class="c-formItem">

@@ -68,7 +68,7 @@
         }
         
     }
-
+    &.--detailEdit,
     &.--fieldsEdit,
     &.--tablesEdit {
         td {
@@ -104,7 +104,7 @@
         thead {
             tr {
                 th:nth-child(1) {
-                    width: 90px;
+                    width: 150px;
                 }
                 th:nth-child(2) {
                     width: 250px;
@@ -112,4 +112,21 @@
             }
         }
     }
+    &.--detailEdit {
+        thead {
+            tr {
+                th:nth-child(1) {
+                    width: 150px;
+                }
+                th:nth-child(2) {
+                    width: 250px;
+                }
+
+                th:nth-child(4) {
+                    width: 90px;
+                }
+            }
+        }
+    }
+
 }
