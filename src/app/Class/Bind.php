@@ -200,14 +200,14 @@ class Bind
             $detaills = [];
             if ($objFile->has(DETAIL_FIELD_LOGICAL_CSV_FILE)) {
 
-                $file = $objFile->read(DETAIL_FIELD_LOGICAL_CSV_FILE);
-                $lines = explode("\n", $file);
+                $lines = $objFile->readCsvAsArray(DETAIL_FIELD_LOGICAL_CSV_FILE);
                 $order = 0;
+
                 foreach ($lines as $line) {
-                    $arrLine = str_getcsv($line);
-                    if (isset($arrLine[0]) && isset($arrLine[0])) {
-                        $detaills[$arrLine[0]][$arrLine[1]] = $arrLine;
-                        $detaills[$arrLine[0]][$arrLine[1]]['order'] = $order++;
+                    //$arrLine = str_getcsv($line);
+                    if (isset($line[0]) && isset($line[0])) {
+                        $detaills[$line[0]][$line[1]] = $line;
+                        $detaills[$line[0]][$line[1]]['order'] = $order++;
                     }
                 }
 

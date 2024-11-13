@@ -89,6 +89,34 @@ class File
         }
     }
 
+    public function readCsvAsArray($name = '')
+    {
+        $rows = [];
+        try {
+            if ($this->flyfiles->has($name)) {
+                // CSV ファイルの内容を取得
+                $fileContent = $this->flyfiles->read($name);
+    
+                // メモリ上に一時ストリームを作成
+                $stream = fopen('php://memory', 'r+');
+                fwrite($stream, $fileContent);
+                rewind($stream);
+    
+                // ストリームから行ごとに CSV を解析して配列に追加
+                while (($arrLine = fgetcsv($stream)) !== false) {
+                    $rows[] = $arrLine;
+                }
+    
+                // ストリームを閉じる
+                fclose($stream);
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    
+        return $rows; // 行ごとの配列を返す
+    }
+
     public function read($name = '')
     {
         $content = '';
