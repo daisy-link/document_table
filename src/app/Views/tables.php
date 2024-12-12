@@ -54,7 +54,7 @@
                             </td>
                             <?php elseif ($key == 3) : ?>
                             <td class="u-text-nowrap">
-                                <textarea name="tables[<?php Utils::_esc($id); ?>][<?php Utils::_esc($key); ?>]" maxlength="100"><?php Utils::_esc($column ?? ''); ?></textarea>
+                                <textarea name="tables[<?php Utils::_esc($id); ?>][<?php Utils::_esc($key); ?>]" maxlength="500"><?php Utils::_esc($column ?? ''); ?></textarea>
                             </td>
                             <?php elseif ($key == 2|| $key == 4) : ?>
                             <td>
@@ -62,7 +62,7 @@
                             </td>
                             <?php else: ?>
                             <td>
-                                <input type="text" name="tables[<?php Utils::_esc($id); ?>][<?php Utils::_esc($key); ?>]" maxlength="500" class="" value="<?php Utils::_esc($column ?? ''); ?>">
+                                <input type="text" name="tables[<?php Utils::_esc($id); ?>][<?php Utils::_esc($key); ?>]" maxlength="50" class="" value="<?php Utils::_esc($column ?? ''); ?>">
                             </td>
                             <?php endif; ?>
                             <?php endforeach; ?>
