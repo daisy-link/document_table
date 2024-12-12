@@ -98,12 +98,12 @@ class MSSQL
                     c.CHARACTER_MAXIMUM_LENGTH AS max_length,
                     c.COLUMN_DEFAULT AS isDefault,
                     ep.value AS Comment,
-                    i.name AS IndexName,
+                    STRING_AGG(i.name, ', ') AS IndexNames,
                     sc.precision AS Precision,
                     sc.scale AS Scale,
                     CASE
-                        WHEN i.is_primary_key = 1 THEN 'PRI'
-                        WHEN i.is_unique = 1 THEN 'UNI'
+                        WHEN MAX(CASE WHEN i.is_primary_key = 1 THEN 1 ELSE 0 END) = 1 THEN 'PRI'
+                        WHEN MAX(CASE WHEN i.is_unique = 1 THEN 1 ELSE 0 END) = 1 THEN 'UNI'
                         ELSE ''
                     END AS KeyType
                 FROM information_schema.columns c
@@ -123,6 +123,15 @@ class MSSQL
                     AND ic.index_id = i.index_id
                 WHERE c.table_schema = :schema_name 
                 AND c.table_name = :table_name
+                GROUP BY 
+                    c.COLUMN_NAME, 
+                    c.DATA_TYPE, 
+                    c.IS_NULLABLE, 
+                    c.CHARACTER_MAXIMUM_LENGTH, 
+                    c.COLUMN_DEFAULT, 
+                    ep.value, 
+                    sc.precision, 
+                    sc.scale
             ");
             $sql->bindParam(':schema_name', $schema, PDO::PARAM_STR);
             $sql->bindParam(':table_name', $tableName, PDO::PARAM_STR);
