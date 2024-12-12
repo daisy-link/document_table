@@ -96,7 +96,10 @@ class MSSQL
                         ELSE 'NO'
                     END AS isNull,
                     c.CHARACTER_MAXIMUM_LENGTH AS max_length,
-                    c.COLUMN_DEFAULT AS isDefault,
+                    CASE 
+                        WHEN dc.object_id IS NULL THEN 'NULL'
+                        ELSE dc.definition
+                    END AS isDefault,
                     ep.value AS Comment,
                     STRING_AGG(i.name, ', ') AS IndexNames,
                     sc.precision AS Precision,
@@ -110,6 +113,8 @@ class MSSQL
                 LEFT JOIN sys.columns sc
                     ON c.TABLE_NAME = OBJECT_NAME(sc.object_id)
                     AND c.COLUMN_NAME = sc.name
+                LEFT JOIN sys.default_constraints dc
+                    ON sc.default_object_id = dc.object_id
                 LEFT JOIN sys.extended_properties ep
                     ON sc.object_id = ep.major_id
                     AND sc.column_id = ep.minor_id
@@ -128,13 +133,14 @@ class MSSQL
                     c.DATA_TYPE, 
                     c.IS_NULLABLE, 
                     c.CHARACTER_MAXIMUM_LENGTH, 
-                    c.COLUMN_DEFAULT, 
+                    dc.object_id,
+                    dc.definition,
                     ep.value, 
                     sc.precision, 
-                    sc.scale,
+                    sc.scale, 
                     sc.column_id
                 ORDER BY 
-                    sc.column_id
+                    sc.column_id;
             ");
             $sql->bindParam(':schema_name', $schema, PDO::PARAM_STR);
             $sql->bindParam(':table_name', $tableName, PDO::PARAM_STR);
