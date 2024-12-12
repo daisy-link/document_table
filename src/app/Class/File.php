@@ -67,7 +67,7 @@ class File
                 $content = $this->flyfiles->read($name);
                 $hasBom = (substr($content, 0, 3) === "\xEF\xBB\xBF");
             } else {
-                throw new Exception('指定されたファイルはありません ');
+                // throw new Exception('指定されたファイルはありません ');
             }
 
             $file = fopen(EXPORT_FILE_PATH . $name, 'w');
