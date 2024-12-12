@@ -131,7 +131,10 @@ class MSSQL
                     c.COLUMN_DEFAULT, 
                     ep.value, 
                     sc.precision, 
-                    sc.scale
+                    sc.scale,
+                    sc.column_id
+                ORDER BY 
+                    sc.column_id
             ");
             $sql->bindParam(':schema_name', $schema, PDO::PARAM_STR);
             $sql->bindParam(':table_name', $tableName, PDO::PARAM_STR);
