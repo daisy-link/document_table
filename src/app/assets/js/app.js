@@ -119,6 +119,16 @@ window.addEventListener('DOMContentLoaded', function () {
         var draggedRow = null;
     
         table.addEventListener('dragstart', (event) => {
+            const target = event.target;
+
+            const focusedElement = document.activeElement;
+
+            if (target.contains(focusedElement) && 
+                (focusedElement.tagName === 'INPUT' || focusedElement.tagName === 'TEXTAREA')) {
+                event.preventDefault();
+                return;
+            }
+
             draggedRow = event.target.closest('tr');
             if (draggedRow) {
                 draggedRow.classList.add('dragging');

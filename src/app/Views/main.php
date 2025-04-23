@@ -16,6 +16,7 @@
 
     </div>
     <ul>
+      <li><a href="<?php echo ROOT_PATH; ?>html" class="c-btn --sm js-btnAction" id="download-link">HTML</a></li>
       <li><a href="<?php echo ROOT_PATH; ?>export" class="c-btn --sm js-btnAction" id="download-link">Excel</a></li>
       <li><a href="<?php echo ROOT_PATH; ?>setting/general" class="c-btn --sm">Setting</a></li>
     </ul>

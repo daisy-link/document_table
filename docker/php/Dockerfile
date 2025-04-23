@@ -11,6 +11,10 @@ RUN apt-get update && \
     && docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 
+# PostgreSQL拡張のインストール
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-install pgsql pdo_pgsql
+
 # Composerのインストール
 RUN curl -sS https://getcomposer.org/installer \
     | php -- \

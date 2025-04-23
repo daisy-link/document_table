@@ -35,6 +35,7 @@
                 <div class="c-selectbox">
                     <select name="type" class="<?php if (!empty($assign['errors'])): ?>is-error<?php endif; ?>">
                         <option value="mysql" <?php Utils::_selected('mysql', $assign['datas']['type'] ?? ''); ?>>MySQL</option>
+                        <option value="pgsql" <?php Utils::_selected('pgsql', $assign['datas']['type'] ?? ''); ?>>PostgreSQL</option>
                         <option value="mssql" <?php Utils::_selected('mssql', $assign['datas']['type'] ?? ''); ?>>MSSQL</option>
                     </select>
                 </div>
@@ -45,7 +46,7 @@
                 <div class="c-formItem__ttl"> dbhost </div>
             </dt>
             <dd>
-                <input type="text" name="dbhost" maxlength="50" placeholder="" class="u-width-m<?php if (!empty($assign['errors'])): ?> is-error<?php endif; ?>" value="<?php Utils::_esc($assign['datas']['dbhost'] ?? ''); ?>">
+                <input type="text" name="dbhost" maxlength="100" placeholder="" class="u-width-m<?php if (!empty($assign['errors'])): ?> is-error<?php endif; ?>" value="<?php Utils::_esc($assign['datas']['dbhost'] ?? ''); ?>">
             </dd>
         </dl>
         <dl class="c-formItem">
@@ -61,7 +62,7 @@
                 <div class="c-formItem__ttl"> dbname </div>
             </dt>
             <dd>
-                <input type="text" name="dbname" maxlength="50" placeholder="" class="u-width-m<?php if (!empty($assign['errors'])): ?> is-error<?php endif; ?>" value="<?php Utils::_esc($assign['datas']['dbname'] ?? ''); ?>">
+                <input type="text" name="dbname" maxlength="100" placeholder="" class="u-width-m<?php if (!empty($assign['errors'])): ?> is-error<?php endif; ?>" value="<?php Utils::_esc($assign['datas']['dbname'] ?? ''); ?>">
             </dd>
         </dl>
         <dl class="c-formItem">
@@ -69,7 +70,7 @@
                 <div class="c-formItem__ttl"> dbuser </div>
             </dt>
             <dd>
-                <input type="text" name="dbuser" maxlength="50" placeholder="" class="u-width-m<?php if (!empty($assign['errors'])): ?> is-error<?php endif; ?>" value="<?php Utils::_esc($assign['datas']['dbuser'] ?? ''); ?>">
+                <input type="text" name="dbuser" maxlength="100" placeholder="" class="u-width-m<?php if (!empty($assign['errors'])): ?> is-error<?php endif; ?>" value="<?php Utils::_esc($assign['datas']['dbuser'] ?? ''); ?>">
             </dd>
         </dl>
         <dl class="c-formItem">
@@ -77,7 +78,7 @@
                 <div class="c-formItem__ttl"> dbpassword </div>
             </dt>
             <dd>
-                <input type="password" name="dbpass" maxlength="50" placeholder="" class="u-width-m<?php if (!empty($assign['errors'])): ?> is-error<?php endif; ?>" value="<?php Utils::_esc($assign['datas']['dbpass'] ?? ''); ?>">
+                <input type="password" name="dbpass" maxlength="100" placeholder="" class="u-width-m<?php if (!empty($assign['errors'])): ?> is-error<?php endif; ?>" value="<?php Utils::_esc($assign['datas']['dbpass'] ?? ''); ?>">
             </dd>
         </dl>
         <?php if ($assign['errors']) : foreach ($assign['errors'] as $error) : ?>

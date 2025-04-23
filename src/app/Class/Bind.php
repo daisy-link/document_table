@@ -37,7 +37,9 @@ class Bind
             else if ($datas['type'] == 'mssql') {
                 $objDb = new MSSQL();
             }
-
+            else if ($datas['type'] == 'pgsql') {
+                $objDb = new PGSQL();
+            }
 
             $objDb->connect($datas);
             $tables = [];

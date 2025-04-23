@@ -146,6 +146,68 @@ Flight::route('/export', function(){
     $objPages->export();
 });
 
+function minifyCss($css) {
+    // CSSコメント削除
+    $css = preg_replace('!/\*.*?\*/!s', '', $css);
+    // 改行・タブ・余分なスペース削除
+    $css = preg_replace('/\s*([{};,:])\s*/', '$1', $css);
+    // 連続するスペースを1つに
+    $css = preg_replace('/\s+/', ' ', $css);
+    // 最後のセミコロン削除
+    $css = preg_replace('/;}/', '}', $css);
+    return trim($css);
+}
+
+Flight::route('/html', function(){
+    $objPages = new Pages();
+    
+    // HTMLをレンダリング
+    ob_start();
+    Flight::render('main', ['assign' => $objPages->assign], 'mainContent');
+    Flight::render('layout');
+    $htmlContent = ob_get_clean(); // バッファの内容を取得してクリア
+    
+    // app.css の内容を取得
+    $cssFile = __DIR__ . '/app/assets/css/app.css';
+    if (file_exists($cssFile)) {
+        $cssContent = file_get_contents($cssFile);
+        $cssContent .= ".p-document__head ul{display:none;}";
+        $cssContent = minifyCss($cssContent); // CSSをミニファイ
+        $cssInline = "<style>" . $cssContent . "</style>";
+    } else {
+        $cssInline = '';
+    }
+
+    // <link rel="stylesheet" href="/app/assets/css/app.css"> を削除し、<style> を埋め込む
+    $htmlContent = preg_replace(
+        '/<link\s+rel=["\']stylesheet["\']\s+href=["\']\/app\/assets\/css\/app\.css["\']\s*>/i',
+        $cssInline,
+        $htmlContent
+    );
+
+    $htmlContent = preg_replace(
+        '/<script\s+src=["\']\/app\/assets\/js\/app\.js["\']\s*><\/script>/i',
+        '',
+        $htmlContent
+    );
+
+    // ファイルに保存
+    $filePath = __DIR__ . '/database/page.html';
+    file_put_contents($filePath, $htmlContent);
+    
+    // ダウンロード用ヘッダー
+    Flight::response()
+        ->header('Content-Description', 'File Transfer')
+        ->header('Content-Type', 'application/octet-stream')
+        ->header('Content-Disposition', 'attachment; filename="page.html"')
+        ->header('Expires', '0')
+        ->header('Cache-Control', 'must-revalidate')
+        ->header('Pragma', 'public')
+        ->header('Content-Length', filesize($filePath))
+        ->write(file_get_contents($filePath))
+        ->send();
+});
+
 
 
 
